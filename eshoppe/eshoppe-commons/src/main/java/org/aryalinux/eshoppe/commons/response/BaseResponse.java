@@ -20,4 +20,7 @@ public class BaseResponse {
 		this.message = message;
 	}
 
+	public String toString() {
+		return "Code: " + code + ", Message : " + message;
+	}
 }

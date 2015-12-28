@@ -5,7 +5,7 @@
 	http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context.xsd">
-	<import resource="data-dao.xml"/>
+	<import resource="classpath:data-dao.xml"/>
 	<context:annotation-config></context:annotation-config>
-	<context:component-scan base-package="org.aryalinux.eshoppe.service"></context:component-scan>
+	<context:component-scan base-package="org.aryalinux.eshoppe.service.impl"></context:component-scan>
 </beans>

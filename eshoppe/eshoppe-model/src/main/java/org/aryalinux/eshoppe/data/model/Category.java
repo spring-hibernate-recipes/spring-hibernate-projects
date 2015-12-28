@@ -3,9 +3,12 @@ package org.aryalinux.eshoppe.data.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -14,7 +17,7 @@ public class Category extends BaseEntity {
 	private String name;
 	@Column
 	private String description;
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Category> children;
 	@ElementCollection
 	private List<String> properties;
@@ -22,6 +25,8 @@ public class Category extends BaseEntity {
 	private List<String> imageUrls;
 	@Column
 	private String currentImageUrl;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Category parent;
 
 	public Category() {
 		children = new ArrayList<Category>();
@@ -75,6 +80,14 @@ public class Category extends BaseEntity {
 
 	public void setProperties(List<String> properties) {
 		this.properties = properties;
+	}
+
+	public Category getParent() {
+		return parent;
+	}
+
+	public void setParent(Category parent) {
+		this.parent = parent;
 	}
 
 }

@@ -12,7 +12,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
 public class GenericDAO<E, F extends Serializable> {
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -25,13 +24,14 @@ public class GenericDAO<E, F extends Serializable> {
 	}
 
 	@SuppressWarnings("unchecked")
-	@Transactional
+	// @Transactional
 	public F create(E ref) {
 		Session session = sessionFactory.getCurrentSession();
 		return (F) session.save(ref);
 	}
 
 	@SuppressWarnings("unchecked")
+	// @Transactional(propagation = Propagation.REQUIRED)
 	public E findById(F id) {
 		Session session = sessionFactory.getCurrentSession();
 		return (E) session.get(clazz, id);
@@ -48,11 +48,13 @@ public class GenericDAO<E, F extends Serializable> {
 	}
 
 	@SuppressWarnings("unchecked")
+	@Transactional
 	public List<E> fetchAll() {
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(clazz);
 		return criteria.list();
 	}
+
 	public void update(E ref) {
 		Session session = sessionFactory.getCurrentSession();
 		session.update(ref);
@@ -62,4 +64,9 @@ public class GenericDAO<E, F extends Serializable> {
 		Session session = sessionFactory.getCurrentSession();
 		session.delete(ref);
 	}
+
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
 }

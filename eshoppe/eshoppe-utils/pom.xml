@@ -7,7 +7,6 @@
     <artifactId>eshoppe</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
-  <groupId>org.aryalinux.eshoppe</groupId>
   <artifactId>eshoppe-utils</artifactId>
   <version>1.0-SNAPSHOT</version>
   <name>eshoppe-utils</name>
