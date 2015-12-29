@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 public class GenericDAO<E, F extends Serializable> {
@@ -24,14 +25,14 @@ public class GenericDAO<E, F extends Serializable> {
 	}
 
 	@SuppressWarnings("unchecked")
-	// @Transactional
+	@Transactional
 	public F create(E ref) {
 		Session session = sessionFactory.getCurrentSession();
 		return (F) session.save(ref);
 	}
 
 	@SuppressWarnings("unchecked")
-	// @Transactional(propagation = Propagation.REQUIRED)
+	@Transactional(propagation = Propagation.REQUIRED)
 	public E findById(F id) {
 		Session session = sessionFactory.getCurrentSession();
 		return (E) session.get(clazz, id);

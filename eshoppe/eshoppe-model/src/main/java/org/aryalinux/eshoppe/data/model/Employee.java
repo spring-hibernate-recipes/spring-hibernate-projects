@@ -18,6 +18,8 @@ public class Employee extends BaseEntity {
 	private Salary currentSalary;
 	@OneToOne
 	private Role presentRole;
+	@OneToOne
+	private Address address;
 
 	public String getFirstName() {
 		return firstName;
@@ -65,6 +67,14 @@ public class Employee extends BaseEntity {
 
 	public void setPresentRole(Role presentRole) {
 		this.presentRole = presentRole;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 }

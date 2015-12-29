@@ -4,13 +4,14 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 @Entity
 public class Role extends BaseEntity {
 	@Column
 	private String name;
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	private List<Responsibility> responsibilities;
 
 	public String getName() {
