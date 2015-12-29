@@ -2,14 +2,16 @@ package org.aryalinux.eshoppe.commons.response;
 
 import java.util.List;
 
-public class GetAllCategoriesResponse extends BaseResponse {
-	private List<Category> categories;
+import org.aryalinux.eshoppe.commons.CategoryDTO;
 
-	public List<Category> getCategories() {
+public class GetAllCategoriesResponse extends BaseResponse {
+	private List<CategoryDTO> categories;
+
+	public List<CategoryDTO> getCategories() {
 		return categories;
 	}
 
-	public void setCategories(List<Category> categories) {
+	public void setCategories(List<CategoryDTO> categories) {
 		this.categories = categories;
 	}
 

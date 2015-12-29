@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.aryalinux.eshoppe.commons.CategoryDTO;
 import org.aryalinux.eshoppe.commons.request.CreateNewCategoryRequest;
 import org.aryalinux.eshoppe.commons.response.CreateNewCategoryResponse;
 import org.aryalinux.eshoppe.commons.response.GetAllCategoriesResponse;
@@ -50,14 +51,12 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 	public GetAllCategoriesResponse getAllCategories() {
 		List<Category> categories = categoryDAO.fetchAll();
 		GetAllCategoriesResponse getAllCategoriesResponse = new GetAllCategoriesResponse();
-		getAllCategoriesResponse.setCategories(new ArrayList<org.aryalinux.eshoppe.commons.response.Category>());
+		getAllCategoriesResponse.setCategories(new ArrayList<CategoryDTO>());
 		for (Category category : categories) {
-			org.aryalinux.eshoppe.commons.response.Category category2 = (org.aryalinux.eshoppe.commons.response.Category) ObjectUtil
-					.transferState(category, org.aryalinux.eshoppe.commons.response.Category.class);
+			CategoryDTO category2 = (CategoryDTO) ObjectUtil.transferState(category, CategoryDTO.class);
 			getAllCategoriesResponse.getCategories().add(category2);
 			for (Category category3 : category.getChildren()) {
-				org.aryalinux.eshoppe.commons.response.Category category4 = (org.aryalinux.eshoppe.commons.response.Category) ObjectUtil
-						.transferState(category3, org.aryalinux.eshoppe.commons.response.Category.class);
+				CategoryDTO category4 = (CategoryDTO) ObjectUtil.transferState(category3, CategoryDTO.class);
 				category2.getChildren().add(category4);
 			}
 			getAllCategoriesResponse.getCategories().add(category2);

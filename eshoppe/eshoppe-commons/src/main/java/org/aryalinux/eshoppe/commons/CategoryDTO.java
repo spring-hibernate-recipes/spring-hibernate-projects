@@ -1,11 +1,11 @@
-package org.aryalinux.eshoppe.commons.response;
+package org.aryalinux.eshoppe.commons;
 
 import java.util.List;
 
-public class Category {
+public class CategoryDTO {
 	private String name;
 	private String description;
-	private List<Category> children;
+	private List<CategoryDTO> children;
 	private List<String> properties;
 	private List<String> imageUrls;
 	private String currentImageUrl;
@@ -26,11 +26,11 @@ public class Category {
 		this.description = description;
 	}
 
-	public List<Category> getChildren() {
+	public List<CategoryDTO> getChildren() {
 		return children;
 	}
 
-	public void setChildren(List<Category> children) {
+	public void setChildren(List<CategoryDTO> children) {
 		this.children = children;
 	}
 

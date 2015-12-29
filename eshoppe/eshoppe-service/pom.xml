@@ -26,13 +26,13 @@
 		</dependency>
 		<dependency>
 			<groupId>org.aryalinux.eshoppe</groupId>
-			<artifactId>eshoppe-commons</artifactId>
+			<artifactId>eshoppe-utils</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.aryalinux.eshoppe</groupId>
-			<artifactId>eshoppe-utils</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<artifactId>eshoppe-commons</artifactId>
+			<version>1.0</version>
 		</dependency>
 	</dependencies>
 </project>
