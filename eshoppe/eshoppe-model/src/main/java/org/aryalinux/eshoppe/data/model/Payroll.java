@@ -3,14 +3,19 @@ package org.aryalinux.eshoppe.data.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class Salary extends BaseEntity {
+@Table(name = "salaryStructures")
+public class Payroll extends BaseEntity {
 	@Column
 	private String grade;
 	@Column
@@ -23,10 +28,14 @@ public class Salary extends BaseEntity {
 	private Double costToCompany;
 	@Column
 	private Double basicPay;
-	@OneToMany
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "payroll", cascade = CascadeType.ALL)
 	private List<FlexiblePayComponent> flexiblePayComponents;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date revisedOn;
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Employee employee;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "payroll", cascade = CascadeType.ALL)
+	private List<BankAccount> bankAccounts;
 
 	public String getGrade() {
 		return grade;
@@ -90,6 +99,22 @@ public class Salary extends BaseEntity {
 
 	public void setFlexiblePayComponents(List<FlexiblePayComponent> flexiblePayComponents) {
 		this.flexiblePayComponents = flexiblePayComponents;
+	}
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+
+	public List<BankAccount> getBankAccounts() {
+		return bankAccounts;
+	}
+
+	public void setBankAccounts(List<BankAccount> bankAccounts) {
+		this.bankAccounts = bankAccounts;
 	}
 
 }

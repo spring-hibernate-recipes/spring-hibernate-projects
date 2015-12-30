@@ -2,6 +2,8 @@ package org.aryalinux.eshoppe.data.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Address extends BaseEntity {
@@ -17,6 +19,8 @@ public class Address extends BaseEntity {
 	private String country;
 	@Column
 	private String pinCode;
+	@OneToOne(fetch = FetchType.LAZY)
+	private Employee employee;
 
 	public String getLine1() {
 		return line1;
@@ -64,6 +68,14 @@ public class Address extends BaseEntity {
 
 	public void setPinCode(String pinCode) {
 		this.pinCode = pinCode;
+	}
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 
 }

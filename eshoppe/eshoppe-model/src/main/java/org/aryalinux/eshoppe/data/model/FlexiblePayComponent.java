@@ -2,9 +2,11 @@ package org.aryalinux.eshoppe.data.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class FlexiblePayComponent {
@@ -15,6 +17,8 @@ public class FlexiblePayComponent {
 	private String description;
 	@Column
 	private Double value;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Payroll payroll;
 
 	public int getId() {
 		return id;
@@ -38,6 +42,14 @@ public class FlexiblePayComponent {
 
 	public void setValue(Double value) {
 		this.value = value;
+	}
+
+	public Payroll getPayroll() {
+		return payroll;
+	}
+
+	public void setPayroll(Payroll payroll) {
+		this.payroll = payroll;
 	}
 
 }

@@ -17,7 +17,7 @@ public class Category extends BaseEntity {
 	private String name;
 	@Column
 	private String description;
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "parent")
 	private List<Category> children;
 	@ElementCollection
 	private List<String> properties;

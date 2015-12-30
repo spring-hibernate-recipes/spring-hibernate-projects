@@ -2,12 +2,16 @@ package org.aryalinux.eshoppe.data.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "products")
 public class Product extends BaseEntity {
 	@Column
 	private String productCode;
@@ -17,9 +21,9 @@ public class Product extends BaseEntity {
 	private String description;
 	@OneToOne
 	private Price price;
-	@OneToMany
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "product")
 	private List<Property> properties;
-	
+
 	public String getProductCode() {
 		return productCode;
 	}

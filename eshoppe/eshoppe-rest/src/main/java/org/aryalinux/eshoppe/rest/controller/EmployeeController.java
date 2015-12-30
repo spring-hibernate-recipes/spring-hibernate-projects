@@ -1,7 +1,7 @@
 package org.aryalinux.eshoppe.rest.controller;
 
-import org.aryalinux.eshoppe.commons.request.CreateNewEmployeeRequest;
-import org.aryalinux.eshoppe.commons.response.CreateNewEmployeeResponse;
+import org.aryalinux.eshoppe.commons.request.NewEmployeeRequest;
+import org.aryalinux.eshoppe.commons.response.NewEmployeeResponse;
 import org.aryalinux.eshoppe.commons.response.GetEmployeeByIdResponse;
 import org.aryalinux.eshoppe.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class EmployeeController {
 
 	@ResponseBody
 	@RequestMapping(path = "/eshoppe/employee", method = RequestMethod.POST)
-	public CreateNewEmployeeResponse createNewEmployee(CreateNewEmployeeRequest newEmployeeRequest) {
+	public NewEmployeeResponse createNewEmployee(NewEmployeeRequest newEmployeeRequest) {
 		return employeeService.createNewEmployee(newEmployeeRequest);
 	}
 

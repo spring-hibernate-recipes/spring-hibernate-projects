@@ -3,8 +3,11 @@ package org.aryalinux.eshoppe.data.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -16,12 +19,14 @@ import javax.persistence.TemporalType;
 public class Order extends BaseEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date placedOn;
-	@OneToMany
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "order")
 	private List<OrderItem> orderItems;
 	@Column
 	private String specialInstructions;
 	@OneToOne
 	private OrderStatusUpdate currentStatusUpdate;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Customer customer;
 
 	public Date getPlacedOn() {
 		return placedOn;
@@ -53,6 +58,14 @@ public class Order extends BaseEntity {
 
 	public void setCurrentStatusUpdate(OrderStatusUpdate currentStatusUpdate) {
 		this.currentStatusUpdate = currentStatusUpdate;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 }

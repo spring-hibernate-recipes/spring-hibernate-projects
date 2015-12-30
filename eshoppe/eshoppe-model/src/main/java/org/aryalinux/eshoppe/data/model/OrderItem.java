@@ -2,6 +2,8 @@ package org.aryalinux.eshoppe.data.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -14,6 +16,8 @@ public class OrderItem extends BaseEntity {
 	private Integer quantity;
 	@Column
 	private Double price;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Order order;
 
 	public Product getProduct() {
 		return product;
@@ -45,6 +49,14 @@ public class OrderItem extends BaseEntity {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
 	}
 
 }

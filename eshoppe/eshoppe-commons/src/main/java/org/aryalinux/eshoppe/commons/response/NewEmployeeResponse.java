@@ -1,6 +1,6 @@
 package org.aryalinux.eshoppe.commons.response;
 
-public class CreateNewEmployeeResponse extends BaseResponse {
+public class NewEmployeeResponse extends BaseResponse {
 	private Integer employeeId;
 
 	public Integer getEmployeeId() {

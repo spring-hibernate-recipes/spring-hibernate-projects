@@ -3,10 +3,12 @@ package org.aryalinux.eshoppe.data.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -14,11 +16,11 @@ import javax.persistence.TemporalType;
 public class Appraisal extends BaseEntity {
 	@Temporal(TemporalType.DATE)
 	private Date appraisalDate;
-	@OneToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Employee employee;
-	@OneToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Employee reviewer;
-	@OneToMany
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "appraisal")
 	private List<AppraisalMetric> appraisalMetrics;
 	@Column
 	private String result;

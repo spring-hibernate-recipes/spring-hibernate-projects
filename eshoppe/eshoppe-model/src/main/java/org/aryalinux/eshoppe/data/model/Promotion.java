@@ -1,20 +1,22 @@
 package org.aryalinux.eshoppe.data.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
 public class Promotion extends BaseEntity {
-	@OneToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Employee employee;
-	@OneToOne
+	@ManyToOne
 	private Role intialRole;
-	@OneToOne
+	@ManyToOne
 	private Role newRole;
 	@OneToOne
-	private Salary initialSalary;
+	private Payroll initialSalary;
 	@OneToOne
-	private Salary newSalary;
+	private Payroll newSalary;
 
 	public Employee getEmployee() {
 		return employee;
@@ -40,19 +42,19 @@ public class Promotion extends BaseEntity {
 		this.newRole = newRole;
 	}
 
-	public Salary getInitialSalary() {
+	public Payroll getInitialSalary() {
 		return initialSalary;
 	}
 
-	public void setInitialSalary(Salary initialSalary) {
+	public void setInitialSalary(Payroll initialSalary) {
 		this.initialSalary = initialSalary;
 	}
 
-	public Salary getNewSalary() {
+	public Payroll getNewSalary() {
 		return newSalary;
 	}
 
-	public void setNewSalary(Salary newSalary) {
+	public void setNewSalary(Payroll newSalary) {
 		this.newSalary = newSalary;
 	}
 

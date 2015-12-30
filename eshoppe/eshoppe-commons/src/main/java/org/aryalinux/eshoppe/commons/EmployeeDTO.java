@@ -1,10 +1,13 @@
 package org.aryalinux.eshoppe.commons;
 
 public class EmployeeDTO extends BaseDTO {
+	private String employeeCode;
 	private String firstName;
 	private String lastName;
 	private String emailAddress;
 	private String password;
+	private String adId;
+	private String companyEmailAddress;
 	private SalaryDTO salary;
 	private RoleDTO role;
 	private AddressDTO address;
@@ -63,6 +66,30 @@ public class EmployeeDTO extends BaseDTO {
 
 	public void setRole(RoleDTO role) {
 		this.role = role;
+	}
+
+	public String getEmployeeCode() {
+		return employeeCode;
+	}
+
+	public void setEmployeeCode(String employeeCode) {
+		this.employeeCode = employeeCode;
+	}
+
+	public String getAdId() {
+		return adId;
+	}
+
+	public void setAdId(String adId) {
+		this.adId = adId;
+	}
+
+	public String getCompanyEmailAddress() {
+		return companyEmailAddress;
+	}
+
+	public void setCompanyEmailAddress(String companyEmailAddress) {
+		this.companyEmailAddress = companyEmailAddress;
 	}
 
 }

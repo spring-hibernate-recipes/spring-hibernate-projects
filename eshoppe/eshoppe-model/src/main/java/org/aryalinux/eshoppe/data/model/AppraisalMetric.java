@@ -2,9 +2,11 @@ package org.aryalinux.eshoppe.data.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class AppraisalMetric {
@@ -23,6 +25,8 @@ public class AppraisalMetric {
 	private String remarks;
 	@Column
 	private String managerRemarks;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Appraisal appraisal;
 
 	public Integer getId() {
 		return id;
@@ -78,6 +82,14 @@ public class AppraisalMetric {
 
 	public void setManagerRemarks(String managerRemarks) {
 		this.managerRemarks = managerRemarks;
+	}
+
+	public Appraisal getAppraisal() {
+		return appraisal;
+	}
+
+	public void setAppraisal(Appraisal appraisal) {
+		this.appraisal = appraisal;
 	}
 
 }

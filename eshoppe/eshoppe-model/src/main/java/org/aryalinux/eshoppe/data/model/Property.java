@@ -2,9 +2,13 @@ package org.aryalinux.eshoppe.data.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "productProperties")
 public class Property {
 	@Id
 	private Integer id;
@@ -12,6 +16,8 @@ public class Property {
 	private String name;
 	@Column
 	private String value;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Product product;
 
 	public Integer getId() {
 		return id;
