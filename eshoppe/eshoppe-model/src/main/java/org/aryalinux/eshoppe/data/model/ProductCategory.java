@@ -10,15 +10,17 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
-public class Category extends BaseEntity {
+@Table(name = "productCategories")
+public class ProductCategory extends BaseEntity {
 	@Column
 	private String name;
 	@Column
 	private String description;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "parent")
-	private List<Category> children;
+	private List<ProductCategory> children;
 	@ElementCollection
 	private List<String> properties;
 	@ElementCollection
@@ -26,10 +28,10 @@ public class Category extends BaseEntity {
 	@Column
 	private String currentImageUrl;
 	@ManyToOne(fetch = FetchType.LAZY)
-	private Category parent;
+	private ProductCategory parent;
 
-	public Category() {
-		children = new ArrayList<Category>();
+	public ProductCategory() {
+		children = new ArrayList<ProductCategory>();
 		properties = new ArrayList<String>();
 		imageUrls = new ArrayList<String>();
 	}
@@ -50,11 +52,11 @@ public class Category extends BaseEntity {
 		this.description = description;
 	}
 
-	public List<Category> getChildren() {
+	public List<ProductCategory> getChildren() {
 		return children;
 	}
 
-	public void setChildren(List<Category> children) {
+	public void setChildren(List<ProductCategory> children) {
 		this.children = children;
 	}
 
@@ -82,11 +84,11 @@ public class Category extends BaseEntity {
 		this.properties = properties;
 	}
 
-	public Category getParent() {
+	public ProductCategory getParent() {
 		return parent;
 	}
 
-	public void setParent(Category parent) {
+	public void setParent(ProductCategory parent) {
 		this.parent = parent;
 	}
 

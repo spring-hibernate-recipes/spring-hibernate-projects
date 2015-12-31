@@ -35,7 +35,7 @@ public class Employee extends BaseEntity {
 	@Column
 	private String status;
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "employee", cascade = CascadeType.ALL)
-	private Payroll currentSalaryStructure;
+	private SalaryStructure currentSalaryStructure;
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Role presentRole;
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "employee", cascade = CascadeType.ALL)
@@ -91,11 +91,11 @@ public class Employee extends BaseEntity {
 		this.password = password;
 	}
 
-	public Payroll getCurrentSalary() {
+	public SalaryStructure getCurrentSalary() {
 		return currentSalaryStructure;
 	}
 
-	public void setCurrentSalary(Payroll currentSalary) {
+	public void setCurrentSalary(SalaryStructure currentSalary) {
 		this.currentSalaryStructure = currentSalary;
 	}
 
@@ -155,11 +155,11 @@ public class Employee extends BaseEntity {
 		this.assets = assets;
 	}
 
-	public Payroll getCurrentSalaryStructure() {
+	public SalaryStructure getCurrentSalaryStructure() {
 		return currentSalaryStructure;
 	}
 
-	public void setCurrentSalaryStructure(Payroll currentSalaryStructure) {
+	public void setCurrentSalaryStructure(SalaryStructure currentSalaryStructure) {
 		this.currentSalaryStructure = currentSalaryStructure;
 	}
 

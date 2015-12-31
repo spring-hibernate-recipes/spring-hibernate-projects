@@ -7,8 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "orderFulfilments")
 public class OrderFulfilment extends BaseEntity {
 	@OneToOne
 	private Order order;

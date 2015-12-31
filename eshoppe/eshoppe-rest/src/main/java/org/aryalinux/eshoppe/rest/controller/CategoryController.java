@@ -1,7 +1,7 @@
 package org.aryalinux.eshoppe.rest.controller;
 
-import org.aryalinux.eshoppe.commons.request.CreateNewCategoryRequest;
-import org.aryalinux.eshoppe.commons.response.CreateNewCategoryResponse;
+import org.aryalinux.eshoppe.commons.request.NewCategoryRequest;
+import org.aryalinux.eshoppe.commons.response.NewCategoryResponse;
 import org.aryalinux.eshoppe.commons.response.GetAllCategoriesResponse;
 import org.aryalinux.eshoppe.service.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class CategoryController {
 
 	@ResponseBody
 	@RequestMapping(method = RequestMethod.POST, path = "/category")
-	public CreateNewCategoryResponse createNewCategory(@RequestBody CreateNewCategoryRequest createNewCategoryRequest) {
+	public NewCategoryResponse createNewCategory(@RequestBody NewCategoryRequest createNewCategoryRequest) {
 		return productCategoryService.createNewCategory(createNewCategoryRequest);
 	}
 

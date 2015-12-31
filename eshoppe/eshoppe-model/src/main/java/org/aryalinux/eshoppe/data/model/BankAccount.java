@@ -14,7 +14,7 @@ public class BankAccount extends BaseEntity {
 	@Column
 	private String type;
 	@ManyToOne(fetch = FetchType.LAZY)
-	private Payroll payroll;
+	private SalaryStructure payroll;
 
 	public String getNumber() {
 		return number;
@@ -32,11 +32,11 @@ public class BankAccount extends BaseEntity {
 		this.type = type;
 	}
 
-	public Payroll getSalaryStructure() {
+	public SalaryStructure getSalaryStructure() {
 		return payroll;
 	}
 
-	public void setSalaryStructure(Payroll salaryStructure) {
+	public void setSalaryStructure(SalaryStructure salaryStructure) {
 		this.payroll = salaryStructure;
 	}
 

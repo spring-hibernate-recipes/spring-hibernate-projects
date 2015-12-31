@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "salaryStructures")
-public class Payroll extends BaseEntity {
+public class SalaryStructure extends BaseEntity {
 	@Column
 	private String grade;
 	@Column

@@ -14,9 +14,9 @@ public class Promotion extends BaseEntity {
 	@ManyToOne
 	private Role newRole;
 	@OneToOne
-	private Payroll initialSalary;
+	private SalaryStructure initialSalary;
 	@OneToOne
-	private Payroll newSalary;
+	private SalaryStructure newSalary;
 
 	public Employee getEmployee() {
 		return employee;
@@ -42,19 +42,19 @@ public class Promotion extends BaseEntity {
 		this.newRole = newRole;
 	}
 
-	public Payroll getInitialSalary() {
+	public SalaryStructure getInitialSalary() {
 		return initialSalary;
 	}
 
-	public void setInitialSalary(Payroll initialSalary) {
+	public void setInitialSalary(SalaryStructure initialSalary) {
 		this.initialSalary = initialSalary;
 	}
 
-	public Payroll getNewSalary() {
+	public SalaryStructure getNewSalary() {
 		return newSalary;
 	}
 
-	public void setNewSalary(Payroll newSalary) {
+	public void setNewSalary(SalaryStructure newSalary) {
 		this.newSalary = newSalary;
 	}
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -23,6 +24,8 @@ public class Product extends BaseEntity {
 	private Price price;
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "product")
 	private List<Property> properties;
+	@ElementCollection
+	private List<String> images;
 
 	public String getProductCode() {
 		return productCode;
@@ -62,6 +65,14 @@ public class Product extends BaseEntity {
 
 	public void setProperties(List<Property> properties) {
 		this.properties = properties;
+	}
+
+	public List<String> getImages() {
+		return images;
+	}
+
+	public void setImages(List<String> images) {
+		this.images = images;
 	}
 
 }

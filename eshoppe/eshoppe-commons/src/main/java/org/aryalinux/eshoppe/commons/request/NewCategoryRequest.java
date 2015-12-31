@@ -3,7 +3,7 @@ package org.aryalinux.eshoppe.commons.request;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateNewCategoryRequest {
+public class NewCategoryRequest {
 	private String name;
 	private String description;
 	private Integer parentCategoryId;
@@ -11,7 +11,7 @@ public class CreateNewCategoryRequest {
 	private List<String> imageUrls;
 	private String currentImageUrl;
 
-	public CreateNewCategoryRequest() {
+	public NewCategoryRequest() {
 		properties = new ArrayList<String>();
 		imageUrls = new ArrayList<String>();
 	}

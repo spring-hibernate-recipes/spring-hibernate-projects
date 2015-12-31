@@ -1,6 +1,6 @@
 package org.aryalinux.eshoppe.commons.response;
 
-public class CreateNewCategoryResponse extends BaseResponse {
+public class NewCategoryResponse extends BaseResponse {
 	private Integer categoryId;
 
 	public Integer getCategoryId() {

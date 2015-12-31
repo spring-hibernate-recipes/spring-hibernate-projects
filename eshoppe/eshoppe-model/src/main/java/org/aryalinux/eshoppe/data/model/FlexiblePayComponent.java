@@ -7,8 +7,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "flexiblePayComponents")
 public class FlexiblePayComponent {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +20,7 @@ public class FlexiblePayComponent {
 	@Column
 	private Double value;
 	@ManyToOne(fetch = FetchType.LAZY)
-	private Payroll payroll;
+	private SalaryStructure payroll;
 
 	public int getId() {
 		return id;
@@ -44,11 +46,11 @@ public class FlexiblePayComponent {
 		this.value = value;
 	}
 
-	public Payroll getPayroll() {
+	public SalaryStructure getPayroll() {
 		return payroll;
 	}
 
-	public void setPayroll(Payroll payroll) {
+	public void setPayroll(SalaryStructure payroll) {
 		this.payroll = payroll;
 	}
 

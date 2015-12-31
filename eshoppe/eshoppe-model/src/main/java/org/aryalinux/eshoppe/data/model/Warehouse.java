@@ -3,8 +3,10 @@ package org.aryalinux.eshoppe.data.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "warehouses")
 public class Warehouse extends BaseEntity {
 	@Column
 	private String name;
