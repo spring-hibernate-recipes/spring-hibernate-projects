@@ -12,6 +12,14 @@
 	<context:annotation-config></context:annotation-config>
 	<context:component-scan base-package="org.aryalinux.eshoppe.rest.controller"></context:component-scan>
 	<mvc:annotation-driven />
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	</bean>
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
 	<bean
 		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 	</bean>

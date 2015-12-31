@@ -2,8 +2,34 @@ package org.aryalinux.eshoppe.utils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Map.Entry;
 
 public class ObjectUtil {
+	@SuppressWarnings("rawtypes")
+	public static Object convert(Object source, Class clazz, ConversionMap conversionMap) {
+		try {
+			Object ref = clazz.newInstance();
+			for (Entry<String, String> entry : conversionMap.entrySet()) {
+				Method srcMethod = source.getClass().getMethod(toGetter(entry.getKey()));
+				Class srcReturnType = srcMethod.getReturnType();
+				Method destMethod = ref.getClass().getMethod(toSetter(entry.getValue()), srcReturnType);
+				Object fromSource = srcMethod.invoke(source);
+				destMethod.invoke(ref, fromSource);
+			}
+			return ref;
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
+	}
+
+	private static String toGetter(String propertyName) {
+		return "get" + Character.toUpperCase(propertyName.charAt(0)) + propertyName.substring(1);
+	}
+
+	private static String toSetter(String propertyName) {
+		return "set" + Character.toUpperCase(propertyName.charAt(0)) + propertyName.substring(1);
+	}
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static Object transferState(Object source, Class destinationType) {
 		Class clazz = source.getClass();

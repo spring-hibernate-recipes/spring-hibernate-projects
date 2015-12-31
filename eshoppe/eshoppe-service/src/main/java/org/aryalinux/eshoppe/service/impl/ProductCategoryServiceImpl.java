@@ -6,11 +6,12 @@ import java.util.List;
 
 import org.aryalinux.eshoppe.commons.CategoryDTO;
 import org.aryalinux.eshoppe.commons.request.NewCategoryRequest;
-import org.aryalinux.eshoppe.commons.response.NewCategoryResponse;
 import org.aryalinux.eshoppe.commons.response.GetAllCategoriesResponse;
+import org.aryalinux.eshoppe.commons.response.NewCategoryResponse;
 import org.aryalinux.eshoppe.data.dao.GenericDAO;
 import org.aryalinux.eshoppe.data.model.ProductCategory;
 import org.aryalinux.eshoppe.service.ProductCategoryService;
+import org.aryalinux.eshoppe.utils.ConversionMap;
 import org.aryalinux.eshoppe.utils.ObjectUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,40 +24,48 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
 	@Transactional
 	public NewCategoryResponse createNewCategory(NewCategoryRequest newCategoryRequest) {
-		NewCategoryResponse createNewCategoryResponse = new NewCategoryResponse();
-		ProductCategory category = (ProductCategory) ObjectUtil.transferState(newCategoryRequest, ProductCategory.class);
+		NewCategoryResponse newCategoryResponse = new NewCategoryResponse();
+		ConversionMap conversionMap = new ConversionMap().add("name", "name").add("description", "description")
+				.add("imageUrls", "imageUrls").add("properties", "properties")
+				.add("currentImageUrl", "currentImageUrl");
+		ProductCategory category = (ProductCategory) ObjectUtil.convert(newCategoryRequest, ProductCategory.class,
+				conversionMap);
 		category.setActive(1);
 		category.setCreatedDate(new Date());
+		category.setUpdatedDate(new Date());
 
-		if (newCategoryRequest.getParentCategoryId() != null) {
+		if (newCategoryRequest.getParentCategoryId() != null && newCategoryRequest.getParentCategoryId() != -1) {
 			ProductCategory parent = categoryDAO.findById(newCategoryRequest.getParentCategoryId());
 			if (parent == null) {
-				createNewCategoryResponse.setCode(0);
-				createNewCategoryResponse.setMessage("Could not locate category with id "
+				newCategoryResponse.setCode(0);
+				newCategoryResponse.setMessage("Could not locate category with id "
 						+ newCategoryRequest.getParentCategoryId() + " for update as parent.");
-				return createNewCategoryResponse;
+				return newCategoryResponse;
 			} else {
 				category.setParent(parent);
 			}
 		}
 
 		Integer id = categoryDAO.create(category);
-		createNewCategoryResponse.setCode(1);
-		createNewCategoryResponse.setMessage("Category with id : " + id + " created successfully.");
-		createNewCategoryResponse.setCategoryId(id);
+		newCategoryResponse.setCode(1);
+		newCategoryResponse.setMessage("Category with id : " + id + " created successfully.");
+		newCategoryResponse.setCategoryId(id);
 
-		return createNewCategoryResponse;
+		return newCategoryResponse;
 	}
 
 	public GetAllCategoriesResponse getAllCategories() {
+		ConversionMap conversionMap = new ConversionMap().add("name", "name").add("id", "id")
+				.add("description", "description").add("properties", "properties").add("imageUrls", "imageUrls")
+				.add("currentImageUrl", "currentImageUrl");
 		List<ProductCategory> categories = categoryDAO.fetchAll();
 		GetAllCategoriesResponse getAllCategoriesResponse = new GetAllCategoriesResponse();
 		getAllCategoriesResponse.setCategories(new ArrayList<CategoryDTO>());
 		for (ProductCategory category : categories) {
-			CategoryDTO category2 = (CategoryDTO) ObjectUtil.transferState(category, CategoryDTO.class);
+			CategoryDTO category2 = (CategoryDTO) ObjectUtil.convert(category, CategoryDTO.class, conversionMap);
 			getAllCategoriesResponse.getCategories().add(category2);
 			for (ProductCategory category3 : category.getChildren()) {
-				CategoryDTO category4 = (CategoryDTO) ObjectUtil.transferState(category3, CategoryDTO.class);
+				CategoryDTO category4 = (CategoryDTO) ObjectUtil.convert(category3, CategoryDTO.class, conversionMap);
 				category2.getChildren().add(category4);
 			}
 			getAllCategoriesResponse.getCategories().add(category2);

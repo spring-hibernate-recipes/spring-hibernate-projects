@@ -1,19 +1,19 @@
 package org.aryalinux.eshoppe.commons.request;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class NewCategoryRequest {
 	private String name;
 	private String description;
 	private Integer parentCategoryId;
-	private List<String> properties;
-	private List<String> imageUrls;
+	private Set<String> properties;
+	private Set<String> imageUrls;
 	private String currentImageUrl;
 
 	public NewCategoryRequest() {
-		properties = new ArrayList<String>();
-		imageUrls = new ArrayList<String>();
+		properties = new HashSet<String>();
+		imageUrls = new HashSet<String>();
 	}
 
 	public String getName() {
@@ -40,19 +40,19 @@ public class NewCategoryRequest {
 		this.parentCategoryId = parentCategoryId;
 	}
 
-	public List<String> getProperties() {
+	public Set<String> getProperties() {
 		return properties;
 	}
 
-	public void setProperties(List<String> properties) {
+	public void setProperties(Set<String> properties) {
 		this.properties = properties;
 	}
 
-	public List<String> getImageUrls() {
+	public Set<String> getImageUrls() {
 		return imageUrls;
 	}
 
-	public void setImageUrls(List<String> imageUrls) {
+	public void setImageUrls(Set<String> imageUrls) {
 		this.imageUrls = imageUrls;
 	}
 

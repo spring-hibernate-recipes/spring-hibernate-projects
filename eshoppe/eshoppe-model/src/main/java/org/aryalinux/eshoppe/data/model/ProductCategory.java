@@ -1,7 +1,7 @@
 package org.aryalinux.eshoppe.data.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,20 +20,20 @@ public class ProductCategory extends BaseEntity {
 	@Column
 	private String description;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "parent")
-	private List<ProductCategory> children;
-	@ElementCollection
-	private List<String> properties;
-	@ElementCollection
-	private List<String> imageUrls;
+	private Set<ProductCategory> children;
+	@ElementCollection(fetch = FetchType.EAGER)
+	private Set<String> properties;
+	@ElementCollection(fetch = FetchType.EAGER)
+	private Set<String> imageUrls;
 	@Column
 	private String currentImageUrl;
 	@ManyToOne(fetch = FetchType.LAZY)
 	private ProductCategory parent;
 
 	public ProductCategory() {
-		children = new ArrayList<ProductCategory>();
-		properties = new ArrayList<String>();
-		imageUrls = new ArrayList<String>();
+		children = new HashSet<ProductCategory>();
+		properties = new HashSet<String>();
+		imageUrls = new HashSet<String>();
 	}
 
 	public String getName() {
@@ -52,19 +52,19 @@ public class ProductCategory extends BaseEntity {
 		this.description = description;
 	}
 
-	public List<ProductCategory> getChildren() {
+	public Set<ProductCategory> getChildren() {
 		return children;
 	}
 
-	public void setChildren(List<ProductCategory> children) {
+	public void setChildren(Set<ProductCategory> children) {
 		this.children = children;
 	}
 
-	public List<String> getImageUrls() {
+	public Set<String> getImageUrls() {
 		return imageUrls;
 	}
 
-	public void setImageUrls(List<String> imageUrls) {
+	public void setImageUrls(Set<String> imageUrls) {
 		this.imageUrls = imageUrls;
 	}
 
@@ -76,11 +76,11 @@ public class ProductCategory extends BaseEntity {
 		this.currentImageUrl = currentImageUrl;
 	}
 
-	public List<String> getProperties() {
+	public Set<String> getProperties() {
 		return properties;
 	}
 
-	public void setProperties(List<String> properties) {
+	public void setProperties(Set<String> properties) {
 		this.properties = properties;
 	}
 

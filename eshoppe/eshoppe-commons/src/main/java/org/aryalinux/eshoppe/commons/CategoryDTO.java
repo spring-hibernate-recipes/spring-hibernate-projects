@@ -1,14 +1,23 @@
 package org.aryalinux.eshoppe.commons;
 
-import java.util.List;
+import java.util.Set;
 
 public class CategoryDTO {
+	private Integer id;
 	private String name;
 	private String description;
-	private List<CategoryDTO> children;
-	private List<String> properties;
-	private List<String> imageUrls;
+	private Set<CategoryDTO> children;
+	private Set<String> properties;
+	private Set<String> imageUrls;
 	private String currentImageUrl;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;
@@ -26,27 +35,27 @@ public class CategoryDTO {
 		this.description = description;
 	}
 
-	public List<CategoryDTO> getChildren() {
+	public Set<CategoryDTO> getChildren() {
 		return children;
 	}
 
-	public void setChildren(List<CategoryDTO> children) {
+	public void setChildren(Set<CategoryDTO> children) {
 		this.children = children;
 	}
 
-	public List<String> getProperties() {
+	public Set<String> getProperties() {
 		return properties;
 	}
 
-	public void setProperties(List<String> properties) {
+	public void setProperties(Set<String> properties) {
 		this.properties = properties;
 	}
 
-	public List<String> getImageUrls() {
+	public Set<String> getImageUrls() {
 		return imageUrls;
 	}
 
-	public void setImageUrls(List<String> imageUrls) {
+	public void setImageUrls(Set<String> imageUrls) {
 		this.imageUrls = imageUrls;
 	}
 
