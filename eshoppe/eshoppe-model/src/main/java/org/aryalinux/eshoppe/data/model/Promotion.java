@@ -4,8 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "promotions")
 public class Promotion extends BaseEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Employee employee;

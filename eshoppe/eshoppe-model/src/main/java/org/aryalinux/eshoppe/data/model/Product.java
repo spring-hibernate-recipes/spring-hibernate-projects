@@ -3,10 +3,12 @@ package org.aryalinux.eshoppe.data.model;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -24,8 +26,11 @@ public class Product extends BaseEntity {
 	private Price price;
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "product")
 	private List<Property> properties;
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "productImages", joinColumns = @JoinColumn(name = "productId") )
 	private List<String> images;
+	@Column
+	private String currentImageUrl;
 
 	public String getProductCode() {
 		return productCode;
@@ -73,6 +78,14 @@ public class Product extends BaseEntity {
 
 	public void setImages(List<String> images) {
 		this.images = images;
+	}
+
+	public String getCurrentImageUrl() {
+		return currentImageUrl;
+	}
+
+	public void setCurrentImageUrl(String currentImageUrl) {
+		this.currentImageUrl = currentImageUrl;
 	}
 
 }

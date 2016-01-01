@@ -4,10 +4,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -22,8 +24,10 @@ public class ProductCategory extends BaseEntity {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "parent")
 	private Set<ProductCategory> children;
 	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "productCategoryProperties", joinColumns = @JoinColumn(name = "productCategoryId") )
 	private Set<String> properties;
 	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "productCategoryImages", joinColumns = @JoinColumn(name = "productCategoryId") )
 	private Set<String> imageUrls;
 	@Column
 	private String currentImageUrl;
