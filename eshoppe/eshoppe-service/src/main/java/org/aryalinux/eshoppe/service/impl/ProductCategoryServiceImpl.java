@@ -8,7 +8,7 @@ import org.aryalinux.eshoppe.commons.CategoryDTO;
 import org.aryalinux.eshoppe.commons.request.NewCategoryRequest;
 import org.aryalinux.eshoppe.commons.response.GetAllCategoriesResponse;
 import org.aryalinux.eshoppe.commons.response.NewCategoryResponse;
-import org.aryalinux.eshoppe.data.dao.GenericDAO;
+import org.aryalinux.eshoppe.data.dao.CategoryDAO;
 import org.aryalinux.eshoppe.data.model.ProductCategory;
 import org.aryalinux.eshoppe.service.ProductCategoryService;
 import org.aryalinux.eshoppe.utils.ConversionMap;
@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Component("productCategoryServiceImpl")
 public class ProductCategoryServiceImpl implements ProductCategoryService {
 	@Autowired
-	private GenericDAO<ProductCategory, Integer> categoryDAO;
+	private CategoryDAO categoryDAO;
 
 	@Transactional
 	public NewCategoryResponse createNewCategory(NewCategoryRequest newCategoryRequest) {
@@ -55,22 +55,25 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 	}
 
 	public GetAllCategoriesResponse getAllCategories() {
-		ConversionMap conversionMap = new ConversionMap().add("name", "name").add("id", "id")
-				.add("description", "description").add("properties", "properties").add("imageUrls", "imageUrls")
-				.add("currentImageUrl", "currentImageUrl");
-		List<ProductCategory> categories = categoryDAO.fetchAll();
+		List<ProductCategory> categories = categoryDAO.getAllCategoriesRecursive();
 		GetAllCategoriesResponse getAllCategoriesResponse = new GetAllCategoriesResponse();
 		getAllCategoriesResponse.setCategories(new ArrayList<CategoryDTO>());
 		for (ProductCategory category : categories) {
-			CategoryDTO category2 = (CategoryDTO) ObjectUtil.convert(category, CategoryDTO.class, conversionMap);
-			getAllCategoriesResponse.getCategories().add(category2);
-			for (ProductCategory category3 : category.getChildren()) {
-				CategoryDTO category4 = (CategoryDTO) ObjectUtil.convert(category3, CategoryDTO.class, conversionMap);
-				category2.getChildren().add(category4);
-			}
-			getAllCategoriesResponse.getCategories().add(category2);
+			getAllCategoriesResponse.getCategories().add(toDTO(category));
 		}
 		return getAllCategoriesResponse;
 	}
 
+	private CategoryDTO toDTO(ProductCategory productCategory) {
+		CategoryDTO categoryDTO = new CategoryDTO();
+		categoryDTO.setCurrentImageUrl(productCategory.getCurrentImageUrl());
+		categoryDTO.setDescription(productCategory.getDescription());
+		categoryDTO.setId(productCategory.getId());
+		categoryDTO.setImageUrls(productCategory.getImageUrls());
+		categoryDTO.setProperties(productCategory.getProperties());
+		for (ProductCategory category : productCategory.getChildren()) {
+			categoryDTO.getChildren().add(toDTO(category));
+		}
+		return categoryDTO;
+	}
 }

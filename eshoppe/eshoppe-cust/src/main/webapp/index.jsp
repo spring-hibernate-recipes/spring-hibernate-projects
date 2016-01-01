@@ -4,6 +4,12 @@
 <head>
 <title>Eshoppe</title>
 <link rel="stylesheet" type="text/css" href="style.css">
+<script type="text/javascript" src="jquery-git2.min.js"></script>
+<script type="text/javascript">
+	$.ready(function(){
+		
+	});
+</script>
 </head>
 
 <body>

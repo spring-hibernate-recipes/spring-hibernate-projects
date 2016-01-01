@@ -21,17 +21,17 @@ public class ProductCategory extends BaseEntity {
 	private String name;
 	@Column
 	private String description;
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "parent")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "parent")
 	private Set<ProductCategory> children;
-	@ElementCollection(fetch = FetchType.EAGER)
+	@ElementCollection(fetch = FetchType.LAZY)
 	@CollectionTable(name = "productCategoryProperties", joinColumns = @JoinColumn(name = "productCategoryId") )
 	private Set<String> properties;
-	@ElementCollection(fetch = FetchType.EAGER)
+	@ElementCollection(fetch = FetchType.LAZY)
 	@CollectionTable(name = "productCategoryImages", joinColumns = @JoinColumn(name = "productCategoryId") )
 	private Set<String> imageUrls;
 	@Column
 	private String currentImageUrl;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private ProductCategory parent;
 
 	public ProductCategory() {
@@ -95,5 +95,4 @@ public class ProductCategory extends BaseEntity {
 	public void setParent(ProductCategory parent) {
 		this.parent = parent;
 	}
-
 }

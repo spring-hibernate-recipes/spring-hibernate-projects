@@ -23,5 +23,10 @@
     	<artifactId>eshoppe-model</artifactId>
     	<version>1.0</version>
     </dependency>
+    <dependency>
+    	<groupId>org.aryalinux.eshoppe</groupId>
+    	<artifactId>eshoppe-utils</artifactId>
+    	<version>1.0-SNAPSHOT</version>
+    </dependency>
   </dependencies>
 </project>

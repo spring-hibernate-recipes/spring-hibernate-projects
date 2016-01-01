@@ -9,6 +9,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -22,7 +23,7 @@ public class Product extends BaseEntity {
 	private String name;
 	@Column
 	private String description;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
 	private Price price;
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "product")
 	private List<Property> properties;
@@ -31,6 +32,8 @@ public class Product extends BaseEntity {
 	private List<String> images;
 	@Column
 	private String currentImageUrl;
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private ProductCategory category;
 
 	public String getProductCode() {
 		return productCode;
@@ -86,6 +89,14 @@ public class Product extends BaseEntity {
 
 	public void setCurrentImageUrl(String currentImageUrl) {
 		this.currentImageUrl = currentImageUrl;
+	}
+
+	public ProductCategory getCategory() {
+		return category;
+	}
+
+	public void setCategory(ProductCategory category) {
+		this.category = category;
 	}
 
 }

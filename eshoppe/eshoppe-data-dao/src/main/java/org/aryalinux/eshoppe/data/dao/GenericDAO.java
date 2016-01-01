@@ -49,7 +49,6 @@ public class GenericDAO<E, F extends Serializable> {
 	}
 
 	@SuppressWarnings("unchecked")
-	@Transactional
 	public List<E> fetchAll() {
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(clazz);

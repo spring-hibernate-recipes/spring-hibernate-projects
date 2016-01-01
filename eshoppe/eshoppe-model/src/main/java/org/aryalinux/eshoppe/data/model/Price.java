@@ -2,13 +2,14 @@ package org.aryalinux.eshoppe.data.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "prices")
 public class Price extends BaseEntity {
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	private Product product;
 	@Column
 	private Double markedPrice;
