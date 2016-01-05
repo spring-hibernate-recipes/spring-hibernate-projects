@@ -23,6 +23,8 @@ public class ProductCategory extends BaseEntity {
 	private String imageUrl;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "productCategory")
 	private List<Product> products;
+	@Column
+	private String label;
 
 	public String getName() {
 		return name;
@@ -62,6 +64,14 @@ public class ProductCategory extends BaseEntity {
 
 	public void setProducts(List<Product> products) {
 		this.products = products;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
 }

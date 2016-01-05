@@ -16,6 +16,8 @@ public class OrderItem extends BaseEntity {
 	private String description;
 	@Column(name = "amount")
 	private Double amount;
+	@Column
+	private Integer quantity;
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Order order;
 
@@ -49,6 +51,14 @@ public class OrderItem extends BaseEntity {
 
 	public void setOrder(Order order) {
 		this.order = order;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 
 }

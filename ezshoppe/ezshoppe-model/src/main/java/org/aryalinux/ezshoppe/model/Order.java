@@ -3,6 +3,7 @@ package org.aryalinux.ezshoppe.model;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -16,6 +17,8 @@ public class Order extends BaseEntity {
 	private Customer customer;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "order")
 	private List<OrderItem> orderItems;
+	@Column
+	private String status;
 
 	public Customer getCustomer() {
 		return customer;
@@ -31,6 +34,14 @@ public class Order extends BaseEntity {
 
 	public void setOrderItems(List<OrderItem> orderItems) {
 		this.orderItems = orderItems;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

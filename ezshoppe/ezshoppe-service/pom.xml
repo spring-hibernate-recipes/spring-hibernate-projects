@@ -7,7 +7,6 @@
     <groupId>org.aryalinux</groupId>
     <version>1.0-SNAPSHOT</version>
   </parent>
-  <groupId>org.aryalinux</groupId>
   <artifactId>ezshoppe-service</artifactId>
   <version>1.0-SNAPSHOT</version>
   <name>ezshoppe-service</name>
@@ -18,6 +17,16 @@
       <artifactId>junit</artifactId>
       <version>3.8.1</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+    	<groupId>org.aryalinux</groupId>
+    	<artifactId>ezshoppe-commons</artifactId>
+    	<version>1.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.aryalinux</groupId>
+    	<artifactId>ezshoppe-dao</artifactId>
+    	<version>1.0-SNAPSHOT</version>
     </dependency>
   </dependencies>
 </project>
