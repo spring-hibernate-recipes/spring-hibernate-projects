@@ -13,7 +13,7 @@
 		alert(formData);
 		$.post("http://localhost:8080/eshoppe-rest/eshoppe/employee", formData,
 				function(response) {
-					alert(response);
+					alert(response);<% %>
 				});
 	}
 </script>

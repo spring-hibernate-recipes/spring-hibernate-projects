@@ -4,4 +4,14 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+  <servlet>
+  	<servlet-name>FormServlet</servlet-name>
+  	<display-name>FormServlet</display-name>
+  	<description></description>
+  	<servlet-class>org.aryalinux.eshoppe.admin.servlet.FormServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>FormServlet</servlet-name>
+  	<url-pattern>/FormServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

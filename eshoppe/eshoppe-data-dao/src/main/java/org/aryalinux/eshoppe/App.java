@@ -23,6 +23,9 @@ public class App {
 		ProductDAO productDAO = applicationContext.getBean(ProductDAO.class);
 		for (Object o : categories) {
 			ProductCategory category = (ProductCategory) o;
+			System.out.println(category.getName());
+			System.out.println(category.getDescription());
+			System.out.println(category.getCreatedDate());
 			category.setActive(1);
 			int parentId = du.getRandomId("productCategories", "id");
 
