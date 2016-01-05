@@ -72,7 +72,7 @@ public class ProductServiceImpl implements ProductService {
 			response = new BaseResponse(0, "Could not find product for given id.");
 		} else {
 			response = new BaseResponse(1, "Product found.");
-			response.setData(ObjectUtil.convert(product));
+			response.addData("products", ObjectUtil.convert(product));
 		}
 		return response;
 	}
@@ -85,7 +85,7 @@ public class ProductServiceImpl implements ProductService {
 		List<Product> products = productDAO.getByCriteria(criteria);
 		if (products != null && products.size() > 0) {
 			response = new BaseResponse(1, "Products found for the given category.");
-			response.setData(ObjectUtil.convert(products));
+			response.addData("products", ObjectUtil.convert(products));
 		} else {
 			response = new BaseResponse(0, "No products found for the given category.");
 		}

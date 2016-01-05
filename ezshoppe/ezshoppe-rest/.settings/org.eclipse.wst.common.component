@@ -4,6 +4,12 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="ezshoppe-commons-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ezshoppe-commons/ezshoppe-commons">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ezshoppe-service-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ezshoppe-service/ezshoppe-service">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="ezshoppe-rest"/>
         <property name="java-output-path" value="/ezshoppe-rest/target/classes"/>
     </wb-module>

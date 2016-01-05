@@ -35,7 +35,7 @@ public class CategoryServiceImpl implements CategoryService {
 		criteria.put("parent", null);
 		List<ProductCategory> categories = categoryDAO.getByCriteria(criteria);
 		BaseResponse baseResponse = new BaseResponse(1, "Categories found");
-		baseResponse.setData(ObjectUtil.convert(categories));
+		baseResponse.addData("categories", ObjectUtil.convert(categories));
 		return baseResponse;
 	}
 

@@ -1,16 +1,21 @@
 package org.aryalinux.ezshoppe.service.util;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ObjectUtil {
-	@SuppressWarnings("unchecked")
-	public static Map<String, Object> convert(Object ref) {
+	public static Object convert(Object ref) {
 		ObjectMapper objectMapper = new ObjectMapper();
-		return objectMapper.convertValue(ref, Map.class);
+		if (ref instanceof List) {
+			return objectMapper.convertValue(ref, ArrayList.class);
+		} else {
+			return objectMapper.convertValue(ref, Map.class);
+		}
 	}
 
 	@SuppressWarnings("rawtypes")

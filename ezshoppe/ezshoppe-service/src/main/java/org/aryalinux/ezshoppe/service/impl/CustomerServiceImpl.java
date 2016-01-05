@@ -35,7 +35,7 @@ public class CustomerServiceImpl implements CustomerService {
 		BaseResponse baseResponse = null;
 		if (customer != null) {
 			baseResponse = new BaseResponse(1, "Customer found");
-			baseResponse.setData(ObjectUtil.convert(customer));
+			baseResponse.addData("customer", ObjectUtil.convert(customer));
 			return baseResponse;
 		} else {
 			baseResponse = new BaseResponse(0, "Customer not found");
@@ -54,7 +54,7 @@ public class CustomerServiceImpl implements CustomerService {
 			baseResponse = new BaseResponse(0, "No customer entries found for email address");
 		} else if (customers != null && customers.size() == 1) {
 			baseResponse = new BaseResponse(1, "Customer found");
-			baseResponse.setData(ObjectUtil.convert(customers.get(0)));
+			baseResponse.addData("customer", ObjectUtil.convert(customers.get(0)));
 		}
 		return baseResponse;
 	}
@@ -111,7 +111,7 @@ public class CustomerServiceImpl implements CustomerService {
 			baseResponse = new BaseResponse(0, "Authentication Failure.");
 		} else if (customers != null && customers.size() == 1) {
 			baseResponse = new BaseResponse(1, "Authentication Success.");
-			baseResponse.setData(ObjectUtil.convert(customers.get(0)));
+			baseResponse.addData("customer", ObjectUtil.convert(customers.get(0)));
 		}
 		return baseResponse;
 	}
