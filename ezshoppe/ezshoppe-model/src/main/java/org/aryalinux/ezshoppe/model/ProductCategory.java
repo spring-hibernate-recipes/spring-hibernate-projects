@@ -7,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,16 +14,14 @@ import javax.persistence.Table;
 public class ProductCategory extends BaseEntity {
 	@Column
 	private String name;
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "parent")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<ProductCategory> children;
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private ProductCategory parent;
 	@Column(name = "image_url")
 	private String imageUrl;
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "productCategory")
-	private List<Product> products;
 	@Column
 	private String label;
+	@Column
+	private Integer topLevel;
 
 	public String getName() {
 		return name;
@@ -42,14 +39,6 @@ public class ProductCategory extends BaseEntity {
 		this.children = children;
 	}
 
-	public ProductCategory getParent() {
-		return parent;
-	}
-
-	public void setParent(ProductCategory parent) {
-		this.parent = parent;
-	}
-
 	public String getImageUrl() {
 		return imageUrl;
 	}
@@ -58,20 +47,20 @@ public class ProductCategory extends BaseEntity {
 		this.imageUrl = imageUrl;
 	}
 
-	public List<Product> getProducts() {
-		return products;
-	}
-
-	public void setProducts(List<Product> products) {
-		this.products = products;
-	}
-
 	public String getLabel() {
 		return label;
 	}
 
 	public void setLabel(String label) {
 		this.label = label;
+	}
+
+	public Integer getTopLevel() {
+		return topLevel;
+	}
+
+	public void setTopLevel(Integer topLevel) {
+		this.topLevel = topLevel;
 	}
 
 }

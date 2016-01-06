@@ -46,7 +46,12 @@ public class GenericDAO<E, F extends Serializable> {
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria2 = session.createCriteria(clazz);
 		for (Entry<String, Object> entry : criteria.entrySet()) {
-			criteria2.add(Restrictions.eq(entry.getKey(), entry.getValue()));
+			if (entry.getValue() == null) {
+				criteria2.add(Restrictions.isNull(entry.getKey()));
+			}
+			else {
+				criteria2.add(Restrictions.eq(entry.getKey(), entry.getValue()));
+			}
 		}
 		results = (List<E>) criteria2.list();
 		return results;
