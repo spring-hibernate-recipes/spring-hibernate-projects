@@ -22,7 +22,8 @@ public class CategoryServiceImpl implements CategoryService {
 	public BaseResponse newCategory(NewCategoryRequest newCategoryRequest) {
 		ProductCategory category = (ProductCategory) ObjectUtil.convert(newCategoryRequest, ProductCategory.class,
 				new ConversionMap().add("name", "name").add("label", "label").add("imageUrl", "imageUrl"));
-		ProductCategory parent = categoryDAO.getById(newCategoryRequest.getParentId());
+		System.out.println(newCategoryRequest.getTopLevel());
+		ProductCategory parent = categoryDAO.getById(newCategoryRequest.getParentCategoryId());
 		parent.getChildren().add(category);
 		Integer id = categoryDAO.create(category);
 		categoryDAO.update(parent);
@@ -37,6 +38,13 @@ public class CategoryServiceImpl implements CategoryService {
 		List<ProductCategory> categories = categoryDAO.getByCriteria(criteria);
 		BaseResponse baseResponse = new BaseResponse(1, "Categories found");
 		baseResponse.addData("categories", ObjectUtil.convert(categories));
+		return baseResponse;
+	}
+
+	public BaseResponse getAllCategories() {
+		List<ProductCategory> categories = categoryDAO.getAll();
+		BaseResponse baseResponse = new BaseResponse(1, "Found categories");
+		baseResponse.addData("categories", categories);
 		return baseResponse;
 	}
 

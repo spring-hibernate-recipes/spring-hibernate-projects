@@ -7,4 +7,6 @@ public interface CategoryService {
 	BaseResponse newCategory(NewCategoryRequest newCategoryRequest);
 
 	BaseResponse getTopLevelCategories();
+
+	BaseResponse getAllCategories();
 }

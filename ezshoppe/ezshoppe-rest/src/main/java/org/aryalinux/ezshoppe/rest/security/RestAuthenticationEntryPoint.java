@@ -10,7 +10,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
-
 	public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
 			throws IOException, ServletException {
 		response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");

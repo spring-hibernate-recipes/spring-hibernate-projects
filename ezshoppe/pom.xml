@@ -79,5 +79,6 @@
 		<module>ezshoppe-service</module>
 		<module>ezshoppe-rest</module>
 		<module>ezshoppe-web</module>
+		<module>ezshoppe-admin</module>
 	</modules>
 </project>

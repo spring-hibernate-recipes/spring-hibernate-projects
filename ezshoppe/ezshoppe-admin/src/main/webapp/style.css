@@ -1,0 +1,53 @@
+body {
+	margin: 0px;
+}
+
+#container {
+	width: 960px;
+	margin: auto;
+}
+
+#header {
+	height: 70px;
+	padding: 20px 20px 20px 0px;
+	font-size: 2em;
+	font-weight: bold;
+	position: fixed;
+	top: 0px;
+}
+
+#mainContent {
+	padding-top: 80px;
+	padding-bottom: 30px;
+}
+
+#footer {
+	position: fixed;
+	bottom: 0px;
+	height: 30px;
+}
+#menuDiv
+{
+	float: left;
+	width: 200px;
+	padding-top: 20px;
+}
+#contentArea
+{
+	float: left;
+	width: 760px;
+}
+.moduleHead
+{
+	text-align: right;
+	padding: 5px 0px;
+	border-bottom: 1px solid;
+	margin-bottom: 20px;
+}
+#menuDiv ul
+{
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+	list-style-type: none;
+}

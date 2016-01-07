@@ -6,6 +6,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -22,6 +23,8 @@ public class ProductCategory extends BaseEntity {
 	private String label;
 	@Column
 	private Integer topLevel;
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private ProductCategory parent;
 
 	public String getName() {
 		return name;

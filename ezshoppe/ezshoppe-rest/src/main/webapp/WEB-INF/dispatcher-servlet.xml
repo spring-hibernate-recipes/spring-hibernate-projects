@@ -10,7 +10,7 @@
 	http://www.springframework.org/schema/mvc
 	http://www.springframework.org/schema/mvc/spring-mvc.xsd
 	http://www.springframework.org/schema/security
-	http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+	http://www.springframework.org/schema/security/spring-security.xsd">
 	<import resource="classpath:service.xml" />
 	<context:annotation-config></context:annotation-config>
 	<context:component-scan base-package="org.aryalinux.ezshoppe.rest.controller"></context:component-scan>
