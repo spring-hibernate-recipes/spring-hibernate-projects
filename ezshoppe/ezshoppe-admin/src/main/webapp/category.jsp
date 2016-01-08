@@ -5,9 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>ezShoppe Admin</title>
-<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="css/style.css" />
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 </head>
 <body>
@@ -16,10 +14,12 @@
 	</div>
 	<div class="content">
 		<div class="sidebar">
-			<%@include file="menu.jsp" %>
+			<%@include file="menu.jsp"%>
 		</div>
 		<div class="mainContent">
-		</div>	
+			<table>
+			</table>
+		</div>
 	</div>
 </body>
 </html>
