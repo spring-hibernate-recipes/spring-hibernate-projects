@@ -18,6 +18,14 @@ public class GenericDAO<E, F extends Serializable> {
 	@SuppressWarnings("rawtypes")
 	private Class clazz;
 
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
 	@SuppressWarnings("rawtypes")
 	public GenericDAO(Class clazz) {
 		this.clazz = clazz;

@@ -7,18 +7,16 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "categories")
 public class ProductCategory extends BaseEntity {
-	@Column(name = "name", length = 64)
+	@Column
 	private String name;
-	@Column(name = "description")
+	@Column
 	private String description;
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<ProductCategory> children;
-	@Column(name = "top_level")
+	@Column
 	private Integer topLevel;
 
 	public String getName() {

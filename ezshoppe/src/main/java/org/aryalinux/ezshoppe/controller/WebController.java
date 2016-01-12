@@ -27,4 +27,16 @@ public class WebController {
 		ModelAndView modelAndView = new ModelAndView("categories");
 		return modelAndView;
 	}
+
+	@RequestMapping(path = { "/categoryDashboard.html" })
+	public ModelAndView categoryDashboard(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView modelAndView = new ModelAndView("categoryDashboard");
+		return modelAndView;
+	}
+
+	@RequestMapping(path = { "/product.html" })
+	public ModelAndView productForm(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView modelAndView = new ModelAndView("product");
+		return modelAndView;
+	}
 }

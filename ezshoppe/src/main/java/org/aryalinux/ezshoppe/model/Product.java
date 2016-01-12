@@ -1,23 +1,28 @@
 package org.aryalinux.ezshoppe.model;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.OneToMany;
 
 @Entity
-@Table(name = "products")
 public class Product extends BaseEntity {
-	@Column(name = "name")
+	@Column
 	private String name;
-	@Column(name = "brand_name")
+	@Column
 	private String brandName;
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private ProductCategory category;
+	@OneToMany
+	private List<Property> properties;
 	@Column
 	private Double price;
+	@Column
+	private String description;
 
 	public String getName() {
 		return name;
@@ -49,6 +54,22 @@ public class Product extends BaseEntity {
 
 	public void setPrice(Double price) {
 		this.price = price;
+	}
+
+	public List<Property> getProperties() {
+		return properties;
+	}
+
+	public void setProperties(List<Property> properties) {
+		this.properties = properties;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

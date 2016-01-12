@@ -56,9 +56,7 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	public BaseResponse getTopLevelCategories() {
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("topLevel", 1);
-		List<ProductCategory> categories = categoryDAO.getByCriteria(params);
+		List<ProductCategory> categories = categoryDAO.getTopLevelCategories();
 		BaseResponse baseResponse;
 		if (categories != null && categories.size() > 0) {
 			baseResponse = new BaseResponse(1, "Categories found.");
