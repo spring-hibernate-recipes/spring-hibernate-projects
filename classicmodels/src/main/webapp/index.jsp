@@ -8,20 +8,52 @@
 <title>Toy Universe</title>
 <link rel="stylesheet" type="text/css" href="resources/style.css" />
 <script type="text/javascript" src="resources/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="resources/functions.js"></script>
 <script type="text/javascript">
 	$(document).ready(
 			function() {
-				$.get("rest/productline", function(response) {
-					var productLines = response.data;
-					var navMenu = '<ul>\n';
-					for (var i = 0; i < productLines.length; i++) {
-						navMenu += '<li><a href="products.html?line='
-								+ productLines[i].productLine + '">'
-								+ productLines[i].productLine + '</a></li>\n';
-					}
-					navMenu += '</ul>\n';
-					$('#navigation').html(navMenu);
+				loadMenu();
+				$('#showFormLink').click(function(e) {
+					$('#loginPanel').show();
+					e.preventDefault();
 				});
+				$('#form000').submit(
+						function(e) {
+							alert('Authenticating...');
+							var data = {
+								customerNumber: $('#customerNumber').val(),
+								postalCode: $('#postalCode').val()
+							};
+							$.ajax({
+								type: 'POST',
+								contentType : 'application/json',
+								url: 'rest/customer/authenticate',
+								data: JSON.stringify(data),
+								dataType: 'json',
+								timeout: 10000
+							}).done(function(response){
+								if (response.data != null) {
+									var name = response.data.customerName;
+									var html = 'Welcome ' + name + '! [<a href="#" id="logoutLink">Logout</a>]';
+									$('#loginStatusSpan').html(html);
+									$('#logoutLink').click(function(event) {
+										$('#loginStatusSpan').html('Welcome Guest! <a href="#" id="showFormLink">Login</a>');
+										$('#showFormLink').click(function(evt) {
+											$('#loginPanel').show();
+											evt.preventDefault();
+										});
+									});
+
+									$('#loginPanel').hide();
+								}
+								else {
+									$('.errorMessage').html('Customer Number/Postal Code Incorrect. Please try again.');
+								}
+							});
+							e.preventDefault();
+						});
+				makeFormField('#customerNumber', 'Customer Number');
+				makeFormField('#postalCode', 'Postal Code');
 			});
 </script>
 </head>
@@ -30,8 +62,9 @@
 		<div id="header">
 			<div id="logo">TOY UNIVERSE!</div>
 			<div id="search">
-				<br /> Welcome Chandrakant! [Logout]<br /> <input type="text"
-					size="60" value="Search" /><br /> View Cart (0 Items)
+				<br /> <span id="loginStatusSpan">Welcome Guest! <a href="#"
+					id="showFormLink">Login</a></span><br /> <input type="text" size="60"
+					value="Search" /><br /> View Cart (0 Items)
 			</div>
 			<div class="clearDiv"></div>
 		</div>
@@ -50,19 +83,29 @@
 					toys this season...</h1>
 			</div>
 			<div id="testimonials">
-				<h1 style="height: 250px; line-height: 250px; text-align: center">Customer Testimonials..</h1>
+				<h1 style="height: 250px; line-height: 250px; text-align: center">Customer
+					Testimonials..</h1>
 			</div>
 		</div>
 		<div id="footer">
-		(C) 2016 Toy Universe Inc. All Rights Reserved.
-		<br/>
-		<ul>
-			<li><a href="#">Privacy Policy</a></li>
-			<li><a href="#">About Us</a></li>
-			<li><a href="#">Customer Service</a></li>
-			<li><a href="#">Stores</a></li>
-		</ul>
+			(C) 2016 Toy Universe Inc. All Rights Reserved. <br />
+			<ul>
+				<li><a href="#">Privacy Policy</a></li>
+				<li><a href="#">About Us</a></li>
+				<li><a href="#">Customer Service</a></li>
+				<li><a href="#">Stores</a></li>
+			</ul>
 		</div>
+	</div>
+	<div id="loginPanel">
+		<div class="errorMessage">
+		</div>
+		<form id="form000" action="rest/customer/authentication" method="post">
+			<input name="customerNumber" value="Customer Number"
+				id="customerNumber" /> <br /> <input name="postalCode"
+				value="Postal Code" id="postalCode" /><br /> <input value="Login"
+				type="submit" />
+		</form>
 	</div>
 </body>
 </html>

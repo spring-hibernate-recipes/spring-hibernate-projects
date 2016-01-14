@@ -31,12 +31,15 @@ body {
 .clearDiv {
 	clear: both;
 }
+
 #banner {
 	background-color: #2c3e50;
 }
+
 #navigation {
 	float: left;
 }
+
 #navigation ul {
 	list-style-type: none;
 	margin: 0px;
@@ -44,9 +47,11 @@ body {
 	border: 0px;
 	width: 200px;
 }
+
 #navigation ul li {
 	display: block;
 }
+
 #navigation ul li a {
 	display: block;
 	padding-left: 10px;
@@ -56,17 +61,20 @@ body {
 	border-bottom: 1px solid #fff;
 	padding: 5px;
 }
+
 #navigation ul li a:hover {
 	background-color: #7f8c8d;
 	color: #fff;
 	text-decoration: none;
 }
+
 #carousel {
 	float: left;
 	height: 250px;
 	background-color: #3498db;
 	width: 760px;
 }
+
 #offerForCustomer {
 	margin-top: 30px;
 	margin-bottom: 30px;
@@ -74,6 +82,7 @@ body {
 	background-color: #e67e22;
 	color: #fff;
 }
+
 #popularToys {
 	margin-top: 30px;
 	margin-bottom: 30px;
@@ -81,11 +90,42 @@ body {
 	background-color: #d35400;
 	color: #fff;
 }
+
 #footer {
 	background-color: #2c3e50;
 	color: #fff;
 	padding: 20px;
+	margin-top: 20px;
 }
+
 #footer ul {
 	margin-bottom: 0px;
+}
+
+.smallProductDisplay {
+	float: left;
+	width: 220px;
+	margin: 10px;
+}
+
+.smallProductImage {
+	width: 200px;
+	height: 200px;
+	margin: 10px;
+	background-color: #808080;
+}
+
+#loginPanel {
+	width: 300px;
+	height: 200px;
+	display: none;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -150px 0px 0px -100px;
+	background-color: #7f8c8d;
+}
+
+.errorMessage {
+	color: #fff;
 }

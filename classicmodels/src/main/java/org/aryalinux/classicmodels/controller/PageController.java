@@ -10,4 +10,9 @@ public class PageController {
 	public ModelAndView hello() {
 		return new ModelAndView("hello");
 	}
+
+	@RequestMapping(path = "products.html")
+	public ModelAndView productPage() {
+		return new ModelAndView("products");
+	}
 }
