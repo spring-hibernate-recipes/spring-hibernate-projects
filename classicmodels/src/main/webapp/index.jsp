@@ -10,51 +10,9 @@
 <script type="text/javascript" src="resources/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="resources/functions.js"></script>
 <script type="text/javascript">
-	$(document).ready(
-			function() {
-				loadMenu();
-				$('#showFormLink').click(function(e) {
-					$('#loginPanel').show();
-					e.preventDefault();
-				});
-				$('#form000').submit(
-						function(e) {
-							alert('Authenticating...');
-							var data = {
-								customerNumber: $('#customerNumber').val(),
-								postalCode: $('#postalCode').val()
-							};
-							$.ajax({
-								type: 'POST',
-								contentType : 'application/json',
-								url: 'rest/customer/authenticate',
-								data: JSON.stringify(data),
-								dataType: 'json',
-								timeout: 10000
-							}).done(function(response){
-								if (response.data != null) {
-									var name = response.data.customerName;
-									var html = 'Welcome ' + name + '! [<a href="#" id="logoutLink">Logout</a>]';
-									$('#loginStatusSpan').html(html);
-									$('#logoutLink').click(function(event) {
-										$('#loginStatusSpan').html('Welcome Guest! <a href="#" id="showFormLink">Login</a>');
-										$('#showFormLink').click(function(evt) {
-											$('#loginPanel').show();
-											evt.preventDefault();
-										});
-									});
-
-									$('#loginPanel').hide();
-								}
-								else {
-									$('.errorMessage').html('Customer Number/Postal Code Incorrect. Please try again.');
-								}
-							});
-							e.preventDefault();
-						});
-				makeFormField('#customerNumber', 'Customer Number');
-				makeFormField('#postalCode', 'Postal Code');
-			});
+	$(document).ready(function() {
+		loadMenu();
+	});
 </script>
 </head>
 <body>
@@ -62,8 +20,7 @@
 		<div id="header">
 			<div id="logo">TOY UNIVERSE!</div>
 			<div id="search">
-				<br /> <span id="loginStatusSpan">Welcome Guest! <a href="#"
-					id="showFormLink">Login</a></span><br /> <input type="text" size="60"
+				<br /> <%@include file="/WEB-INF/pages/userStatus.jsp" %><br /> <input type="text" size="60"
 					value="Search" /><br /> View Cart (0 Items)
 			</div>
 			<div class="clearDiv"></div>
@@ -98,8 +55,7 @@
 		</div>
 	</div>
 	<div id="loginPanel">
-		<div class="errorMessage">
-		</div>
+		<div class="errorMessage"></div>
 		<form id="form000" action="rest/customer/authentication" method="post">
 			<input name="customerNumber" value="Customer Number"
 				id="customerNumber" /> <br /> <input name="postalCode"

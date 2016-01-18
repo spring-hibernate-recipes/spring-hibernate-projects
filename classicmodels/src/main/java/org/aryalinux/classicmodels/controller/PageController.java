@@ -15,4 +15,9 @@ public class PageController {
 	public ModelAndView productPage() {
 		return new ModelAndView("products");
 	}
+
+	@RequestMapping(path = "simpleForm.html")
+	public ModelAndView simpleForm() {
+		return new ModelAndView("simpleForm");
+	}
 }
