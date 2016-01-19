@@ -1,130 +1,70 @@
-function makeFormField(selector, label) {
-	$(selector).val(label);
-	$(selector).blur(function(e) {
-		if ($(selector).val() == '') {
-			$(selector).val(label);
-		}
-	});
-	$(selector).focus(function(e) {
-		if ($(selector).val() == label) {
-			$(selector).val('');
-		}
-	});
-}
+var entityDef = {
+	name : 'entity',
+	description : 'Entity',
+	submitLabel : 'Save',
+	identifier : {
+		name : 'id',
+		type : 'Integer',
+		label : 'ID',
+		auto : true
+	},
+	properties : [ {
+		name : 'entityName',
+		type : 'text',
+		size : 50,
+		label : 'Entity Name'
+	}, {
+		name : 'entityDescription',
+		type : 'text',
+		size : 80,
+		label : 'Entity Description'
+	} ],
+	lists : [ {
+		type : 'entityProperty',
+		label : 'Properties'
+	} ]
+};
 
-function addCookie(name, value) {
-	if (document.cookie != null && document.cookie != '') {
-		document.cookie += name + "=" + value;
+var propertyDef = {
+	name : 'property',
+	description : 'Property',
+	submitLabel : 'Save',
+	identifier : {
+		name : 'id',
+		type : 'Integer',
+		auto : true
+	},
+	properties : [ {
+		name : 'name',
+		type : 'text',
+		size : '30',
+		label : 'Name'
+	}, {
+		name : 'dataType',
+		type : 'select',
+		choices : [ 'Integer', 'String', 'Date', 'EMail', 'Float', 'BLOB' ],
+		label : 'Data Type'
+	}, {
+		name : 'relation',
+		type : 'select',
+		choices : [],
+		label : 'Relation'
+	} ],
+	lists : []
+};
+
+var elements = {
+	entityProperty : propertyDef,
+	entity : entityDef
+};
+
+function select(data) {
+	var html = '<select name="' + data.name + '">';
+	for (i = 0; i < data.choices.length; i++) {
+		html += '<option>' + data.choices[i] + '</option>';
 	}
-
-}
-
-function getCookie(name) {
-	var cookies = document.cookie;
-	var slices = cookies.split(';');
-	for (i = 0; i < slices.length; i++) {
-		slice = slices[i];
-		slice = slice.trim();
-		var cookieParts = slice.split('=');
-		cookieParts[0] = cookieParts[0].trim();
-		cookieParts[1] = cookieParts[1].trim();
-		if (cookieParts[0] === name) {
-			return cookieParts[1];
-		}
-	}
-	return null;
-}
-
-function removeCookie(name) {
-	document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-}
-
-function projectPropertiesForm() {
-	var formData = {
-		heading : 'Project Properties',
-		action : '/rest/projectproperties',
-		id : 'form0',
-		submitLabel : 'Save Project',
-		fields : [ {
-			label : 'Project Name',
-			type : 'text',
-			name : 'projectName',
-			size : 50
-		}, {
-			label : 'Project Path',
-			type : 'text',
-			name : 'projectPath',
-			size : 50
-		} ]
-	};
-	return generateForm(formData);
-}
-
-function entityForm() {
-	var formData = {
-		heading : 'Create Entity',
-		action : '/rest/entity',
-		id : 'form0',
-		submitLabel : 'Create',
-		fields : [ {
-			label : 'Name',
-			type : 'text',
-			name : 'entityName',
-			size : 50
-		}, {
-			label : 'Description',
-			type : 'text',
-			name : 'description',
-			size : 80
-		} ]
-	};
-	return generateForm(formData);
-}
-
-function databasePropertiesForm() {
-	var formData = {
-		heading : 'Database Properties',
-		action : '/rest/databaseproperties',
-		id : 'form0',
-		submitLabel : 'Save',
-		fields : [ {
-			label : 'Driver Class Name',
-			type : 'text',
-			name : 'driverClassName',
-			size : 50
-		}, {
-			label : 'URL',
-			type : 'text',
-			name : 'url',
-			size : 50
-		}, {
-			label : 'Username',
-			type : 'text',
-			name : 'username',
-			size : 50
-		}, {
-			label : 'Password',
-			type : 'text',
-			name : 'password',
-			size : 50
-		}, {
-			label : 'Show SQL',
-			type : 'text',
-			name : 'showSQL',
-			size : 50
-		}, {
-			label : 'Dialect',
-			type : 'text',
-			name : 'dialect',
-			size : 50
-		}, {
-			label : 'Export Schema',
-			type : 'text',
-			name : 'hbm2ddl',
-			size : 50
-		} ]
-	};
-	return generateForm(formData);
+	html += '</select>';
+	return html;
 }
 
 function textField(data) {
@@ -137,14 +77,16 @@ function submit(label) {
 }
 
 function generateForm(formData) {
-	var form = '<div class="heading">' + formData.heading + '</div>';
+	var form = '<div class="heading">' + formData.description + '</div>';
 	form += '<form id="' + formData.id + '">';
 	form += '<table>';
-	for (i = 0; i < formData.fields.length; i++) {
+	for (i = 0; i < formData.properties.length; i++) {
 		form += '<tr>';
-		form += '<td>' + formData.fields[i].label + '</td>';
-		if (formData.fields[i].type == 'text') {
-			form += '<td>' + textField(formData.fields[i]) + '</td>';
+		form += '<td>' + formData.properties[i].label + '</td>';
+		if (formData.properties[i].type == 'text') {
+			form += '<td>' + textField(formData.properties[i]) + '</td>';
+		} else if (formData.properties[i].type == 'select') {
+			form += '<td>' + select(formData.properties[i]) + '</td>';
 		}
 		form += '</tr>';
 	}
@@ -153,24 +95,25 @@ function generateForm(formData) {
 	form += '<td>' + submit(formData.submitLabel) + '</td>';
 	form += '</tr>';
 	form += '</table>';
+	for (i = 0; i < formData.lists.length; i++) {
+		form += '<div class="heading">' + formData.lists[i].label + '</div>';
+		form += generateForm(elements[formData.lists[i].type]);
+	}
 	return form;
 }
 
-function entitiesTable() {
-	var metaData = {
-		heading : 'All Entities',
-		headings : [ {
-			label : 'ID',
-			key : 'id'
-		}, {
-			label : 'Name',
-			key : 'entityName'
-		}, {
-			label : 'Description',
-			key : 'description'
-		} ]
-	};
-	return generateTable(metaData, []);
+function makeFormField(selector, label) {
+	$(selector).val(label);
+	$(selector).blur(function(e) {
+		if ($(selector).val() == '') {
+			$(selector).val(label);
+		}
+	});
+	$(selector).focus(function(e) {
+		if ($(selector).val() == label) {
+			$(selector).val('');
+		}
+	});
 }
 
 function generateTable(metaData, data) {
@@ -186,7 +129,16 @@ function generateTable(metaData, data) {
 	for (i = 0; i < data.length; i++) {
 		table += '<tr>';
 		for (j = 0; j < metaData.headings.length; j++) {
-			table += '<td>' + data[i][metaData.key] + '</td>';
+			var heading = metaData.headings[j];
+			if (!heading.type) {
+				table += '<td>' + data[i][heading.key] + '</td>';
+			} else if (heading.type && heading.type == 'edit') {
+				table += '<td><a href="#" onclick="edit('
+						+ data[i][heading.key] + ');">' + 'Edit</a></td>';
+			} else if (heading.type && heading.type == 'delete') {
+				table += '<td><a href="#" click="delete('
+						+ data[i][heading.key] + ');">' + 'Delete</a></td>';
+			}
 		}
 		table += '</tr>';
 	}

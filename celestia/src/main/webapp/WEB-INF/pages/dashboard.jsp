@@ -8,18 +8,18 @@
 <script type="text/javascript" src="resources/functions.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#projectProperties').click(function(e) {
+		$('#entities').click(function(e) {
 			e.preventDefault();
-			$('#contentArea').html(projectPropertiesForm());
+			$('#contentArea').html(generateForm(elements.entity));
 		});
-		$('#databaseProperties').click(function(e) {
+		/* $('#databaseProperties').click(function(e) {
 			e.preventDefault();
 			$('#contentArea').html(databasePropertiesForm());
 		});
 		$('#entities').click(function(e) {
 			e.preventDefault();
 			$('#contentArea').html(entityForm() + '<br/>' + entitiesTable());
-		});
+		}); */
 	});
 </script>
 <link rel="stylesheet" type="text/css" href="resources/style.css" />

@@ -6,6 +6,8 @@
 <title>Celestia Control Panel</title>
 </head>
 <body>
-
+	<ul>
+		<li><a href="dashboard.html">Dashboard</a></li>
+	</ul>
 </body>
 </html>
