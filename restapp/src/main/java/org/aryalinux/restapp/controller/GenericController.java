@@ -1,0 +1,59 @@
+package org.aryalinux.restapp.controller;
+
+import java.io.Serializable;
+import java.util.Map;
+
+import org.aryalinux.restapp.common.request.RestRequest;
+import org.aryalinux.restapp.common.response.BaseResponse;
+import org.aryalinux.restapp.service.ServiceDiscoverer;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@Controller
+@RequestMapping(path = "/services")
+public class GenericController {
+	private ServiceDiscoverer serviceDiscoverer;
+
+	@ResponseBody
+	@RequestMapping(path = "/{name}", method = RequestMethod.GET)
+	public BaseResponse getById(@PathVariable String name, @RequestParam("id") Serializable id) {
+		return serviceDiscoverer.getServiceByName(name).findById(id);
+	}
+
+	@ResponseBody
+	@RequestMapping(path = "/{name}/all", method = RequestMethod.GET)
+	public BaseResponse getAll(@PathVariable String name) {
+		return serviceDiscoverer.getServiceByName(name).fetchAll();
+	}
+
+	@SuppressWarnings("unchecked")
+	@ResponseBody
+	@RequestMapping(path = "/{name}/search", method = RequestMethod.GET)
+	public BaseResponse getByParams(@PathVariable String name, @RequestBody RestRequest ref) {
+		Map<String, Object> params = (Map<String, Object>) ref.getData();
+		return serviceDiscoverer.getServiceByName(name).fetchByParams(params);
+	}
+
+	@ResponseBody
+	@RequestMapping(path = "/{name}", method = RequestMethod.POST)
+	public BaseResponse create(@PathVariable String name, @RequestBody RestRequest ref) {
+		return serviceDiscoverer.getServiceByName(name).newEntity(ref);
+	}
+
+	@ResponseBody
+	@RequestMapping(path = "/{name}", method = RequestMethod.PUT)
+	public BaseResponse update(@PathVariable String name, @RequestBody RestRequest ref) {
+		return serviceDiscoverer.getServiceByName(name).update(ref);
+	}
+
+	@ResponseBody
+	@RequestMapping(path = "/{name}", method = RequestMethod.DELETE)
+	public BaseResponse delete(@PathVariable String name, @RequestParam("id") Serializable id) {
+		return serviceDiscoverer.getServiceByName(name).delete(id);
+	}
+}
