@@ -15,10 +15,6 @@ public class GenericDAO {
 	private SessionFactory sessionFactory;
 	private Class entityClass;
 
-	public GenericDAO(Class entityClass) {
-		this.entityClass = entityClass;
-	}
-
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}

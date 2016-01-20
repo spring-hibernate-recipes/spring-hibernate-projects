@@ -6,6 +6,7 @@ import java.util.Map;
 import org.aryalinux.restapp.common.request.RestRequest;
 import org.aryalinux.restapp.common.response.BaseResponse;
 import org.aryalinux.restapp.service.ServiceDiscoverer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +18,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(path = "/services")
 public class GenericController {
+	@Autowired
 	private ServiceDiscoverer serviceDiscoverer;
+
+	public ServiceDiscoverer getServiceDiscoverer() {
+		return serviceDiscoverer;
+	}
+
+	public void setServiceDiscoverer(ServiceDiscoverer serviceDiscoverer) {
+		this.serviceDiscoverer = serviceDiscoverer;
+	}
 
 	@ResponseBody
 	@RequestMapping(path = "/{name}", method = RequestMethod.GET)

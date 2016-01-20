@@ -3,6 +3,7 @@ package org.aryalinux.ezshoppe.model;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 import org.aryalinux.restapp.model.BaseEntity;
@@ -11,7 +12,7 @@ import org.aryalinux.restapp.model.BaseEntity;
 public class ProductCategory extends BaseEntity {
 	private String name;
 	private String description;
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	private List<ProductCategory> children;
 
 	public String getName() {
