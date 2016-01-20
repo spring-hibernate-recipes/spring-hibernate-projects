@@ -16,7 +16,7 @@
     </dependency>
     <dependency>
     	<groupId>org.aryalinux</groupId>
-    	<artifactId>restapp-template</artifactId>
+    	<artifactId>restapp</artifactId>
     	<version>1.0-SNAPSHOT</version>
     </dependency>
   </dependencies>

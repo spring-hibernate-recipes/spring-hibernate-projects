@@ -5,7 +5,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
-import org.aryalinux.restapptemplate.model.BaseEntity;
+import org.aryalinux.restapp.model.BaseEntity;
 
 @Entity
 public class ProductCategory extends BaseEntity {
