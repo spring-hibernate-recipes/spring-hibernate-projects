@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.aryalinux.common.EntityList;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -67,5 +68,32 @@ public class GenericDAO {
 	@Transactional
 	public void delete(Object ref) {
 		sessionFactory.getCurrentSession().delete(ref);
+	}
+
+	@Transactional
+	public Serializable execute(EntityList entityList) {
+		Serializable id = null;
+		for (int i = 0; i < entityList.getEntities().size(); i++) {
+			Object entity = entityList.getEntities().get(i);
+			int operation = entityList.getOperations().get(i);
+			if (entityList.getPrimaryEntityIndex() == i) {
+				id = sessionFactory.getCurrentSession().save(entity);
+			} else {
+				switch (operation) {
+				case 1:
+					sessionFactory.getCurrentSession().save(entity);
+					break;
+				case 2:
+					sessionFactory.getCurrentSession().update(entity);
+					break;
+				case 3:
+					sessionFactory.getCurrentSession().delete(entity);
+					break;
+				default:
+					break;
+				}
+			}
+		}
+		return id;
 	}
 }
