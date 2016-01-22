@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.Map;
 
 import org.aryalinux.restapp.common.response.BaseResponse;
-import org.aryalinux.restapp.service.EntityConverter;
-import org.aryalinux.restapp.service.ServiceDiscoverer;
+import org.aryalinux.restapp.service.EntityMapper;
+import org.aryalinux.restapp.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,69 +19,57 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(path = "/services")
 public class GenericController {
 	@Autowired
-	private ServiceDiscoverer serviceDiscoverer;
+	private GenericService service;
 	@Autowired
-	private EntityConverter entityConverter;
+	private EntityMapper entityMapper;
 
-	public ServiceDiscoverer getServiceDiscoverer() {
-		return serviceDiscoverer;
+	public EntityMapper getEntityConverter() {
+		return entityMapper;
 	}
 
-	public void setServiceDiscoverer(ServiceDiscoverer serviceDiscoverer) {
-		this.serviceDiscoverer = serviceDiscoverer;
-	}
-
-	public EntityConverter getEntityConverter() {
-		return entityConverter;
-	}
-
-	public void setEntityConverter(EntityConverter entityConverter) {
-		this.entityConverter = entityConverter;
+	public void setEntityConverter(EntityMapper entityMapper) {
+		this.entityMapper = entityMapper;
 	}
 
 	@ResponseBody
 	@RequestMapping(path = "/{name}", method = RequestMethod.GET)
 	public BaseResponse getById(@PathVariable String name, @RequestParam("id") Serializable id) {
-		return serviceDiscoverer.getServiceByName(name).findById(id);
+		return service.findById(entityMapper.getClassForName(name), id);
 	}
 
 	@ResponseBody
 	@RequestMapping(path = "/{name}/all", method = RequestMethod.GET)
 	public BaseResponse getAll(@PathVariable String name) {
-		return serviceDiscoverer.getServiceByName(name).fetchAll();
+		return service.fetchAll(entityMapper.getClassForName(name));
 	}
 
 	@ResponseBody
 	@RequestMapping(path = "/{name}/search", method = RequestMethod.POST)
 	public BaseResponse getByParams(@PathVariable String name, @RequestBody Map<String, Object> params) {
-		return serviceDiscoverer.getServiceByName(name).fetchByParams(params);
+		return service.fetchByParams(entityMapper.getClassForName(name), params);
 	}
 
 	@ResponseBody
 	@RequestMapping(path = "/{name}", method = RequestMethod.POST)
 	public BaseResponse create(@PathVariable String name, @RequestBody Map<String, Object> entityMap) {
-		String objectId = entityMap.get("__object_id").toString();
-		entityMap.remove("__object_id");
-		return serviceDiscoverer.getServiceByName(name)
-				.newEntity(entityConverter.convert(entityMap, objectId));
+		return service.newEntity(entityMapper.convert(entityMap, name));
 	}
 
 	@ResponseBody
 	@RequestMapping(path = "/{name}/execute", method = RequestMethod.POST)
 	public BaseResponse execute(@PathVariable String name, @RequestBody Map<String, Object> entityMap) {
-		return serviceDiscoverer.getServiceByName(name).execute(entityConverter.convert(entityMap));
+		return service.execute(entityMapper.convert(entityMap));
 	}
 
 	@ResponseBody
 	@RequestMapping(path = "/{name}", method = RequestMethod.PUT)
 	public BaseResponse update(@PathVariable String name, @RequestBody Map<String, Object> entityMap) {
-		return serviceDiscoverer.getServiceByName(name)
-				.update(entityConverter.convert(entityMap, entityMap.get("__object_id").toString()));
+		return service.update(entityMapper.convert(entityMap, name));
 	}
 
 	@ResponseBody
 	@RequestMapping(path = "/{name}", method = RequestMethod.DELETE)
 	public BaseResponse delete(@PathVariable String name, @RequestParam("id") Serializable id) {
-		return serviceDiscoverer.getServiceByName(name).delete(id);
+		return service.delete(entityMapper.getClassForName(name), id);
 	}
 }

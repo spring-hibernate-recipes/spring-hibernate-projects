@@ -7,9 +7,13 @@ import java.util.Map;
 import org.aryalinux.common.EntityList;
 import org.aryalinux.restapp.common.response.BaseResponse;
 import org.aryalinux.restapp.dao.GenericDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @SuppressWarnings("rawtypes")
+@Component
 public class GenericService {
+	@Autowired
 	private GenericDAO dao;
 
 	public GenericDAO getDao() {
@@ -31,10 +35,10 @@ public class GenericService {
 		return response;
 	}
 
-	public BaseResponse fetchAll() {
+	public BaseResponse fetchAll(Class clazz) {
 		BaseResponse response = null;
 		try {
-			List data = getDao().getAll();
+			List data = getDao().getAll(clazz);
 			if (data == null || data.isEmpty()) {
 				response = new BaseResponse(1, "No records found.");
 				return response;
@@ -48,10 +52,10 @@ public class GenericService {
 		return response;
 	}
 
-	public BaseResponse fetchByParams(Map<String, Object> params) {
+	public BaseResponse fetchByParams(Class clazz, Map<String, Object> params) {
 		BaseResponse response = null;
 		try {
-			List data = getDao().getByParams(params);
+			List data = getDao().getByParams(clazz, params);
 			if (data == null || data.isEmpty()) {
 				response = new BaseResponse(1, "No records found.");
 				return response;
@@ -65,10 +69,10 @@ public class GenericService {
 		return response;
 	}
 
-	public BaseResponse findById(Serializable id) {
+	public BaseResponse findById(Class clazz, Serializable id) {
 		BaseResponse response = null;
 		try {
-			Object data = getDao().getById(id);
+			Object data = getDao().getById(clazz, id);
 			if (data == null) {
 				response = new BaseResponse(1, "No records found.");
 			} else {
@@ -82,10 +86,10 @@ public class GenericService {
 		return response;
 	}
 
-	public BaseResponse delete(Serializable id) {
+	public BaseResponse delete(Class clazz, Serializable id) {
 		BaseResponse response = null;
 		try {
-			Object data = getDao().getById(id);
+			Object data = getDao().getById(clazz, id);
 			if (data == null) {
 				response = new BaseResponse(1, "Record not found.");
 			} else {

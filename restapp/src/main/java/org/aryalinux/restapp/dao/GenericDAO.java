@@ -9,12 +9,15 @@ import org.aryalinux.common.EntityList;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @SuppressWarnings("rawtypes")
+@Component
 public class GenericDAO {
+	@Autowired
 	private SessionFactory sessionFactory;
-	private Class entityClass;
 
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
@@ -24,32 +27,24 @@ public class GenericDAO {
 		this.sessionFactory = sessionFactory;
 	}
 
-	public Class getEntityClass() {
-		return entityClass;
-	}
-
-	public void setEntityClass(Class entityClass) {
-		this.entityClass = entityClass;
-	}
-
 	@Transactional
 	public Serializable create(Object ref) {
 		return (Serializable) sessionFactory.getCurrentSession().save(ref);
 	}
 
 	@Transactional
-	public Object getById(Serializable id) {
-		return sessionFactory.getCurrentSession().get(entityClass, id);
+	public Object getById(Class clazz, Serializable id) {
+		return sessionFactory.getCurrentSession().get(clazz, id);
 	}
 
 	@Transactional
-	public List getAll() {
-		return sessionFactory.getCurrentSession().createCriteria(entityClass).list();
+	public List getAll(Class clazz) {
+		return sessionFactory.getCurrentSession().createCriteria(clazz).list();
 	}
 
 	@Transactional
-	public List getByParams(Map<String, Object> params) {
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(entityClass);
+	public List getByParams(Class clazz, Map<String, Object> params) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(clazz);
 		for (Entry<String, Object> entry : params.entrySet()) {
 			if (entry.getValue() == null) {
 				criteria.add(Restrictions.isNull(entry.getKey()));

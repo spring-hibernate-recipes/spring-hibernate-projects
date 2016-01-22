@@ -7,25 +7,26 @@ import org.aryalinux.common.EntityList;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class EntityConverter {
-	private Map<String, String> entities;
+@SuppressWarnings({ "unchecked", "rawtypes" })
+public class EntityMapper {
+	private Map<String, Class> entities;
 
-	public EntityConverter() {
-		entities = new LinkedHashMap<String, String>();
+	public EntityMapper() {
+		entities = new LinkedHashMap<String, Class>();
 	}
 
-	public Map<String, String> getEntities() {
+	public Map<String, Class> getEntities() {
 		return entities;
 	}
 
-	public void setEntities(Map<String, String> entities) {
+	public void setEntities(Map<String, Class> entities) {
 		this.entities = entities;
 	}
 
-	public Object convert(Map<String, Object> data, String objectId) {
+	public Object convert(Map<String, Object> data, String name) {
 		try {
 			final ObjectMapper mapper = new ObjectMapper();
-			Object pojo = mapper.convertValue(data, Class.forName(entities.get(objectId)));
+			Object pojo = mapper.convertValue(data, entities.get(name));
 			return pojo;
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
@@ -37,6 +38,14 @@ public class EntityConverter {
 			final ObjectMapper mapper = new ObjectMapper();
 			EntityList pojo = (EntityList) mapper.convertValue(data, EntityList.class);
 			return pojo;
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
+	}
+
+	public Class getClassForName(String name) {
+		try {
+			return entities.get(name);
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		}

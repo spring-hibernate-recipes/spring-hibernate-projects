@@ -11,8 +11,10 @@
 	http://www.springframework.org/schema/tx/spring-tx.xsd
 	http://www.springframework.org/schema/mvc
 	http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+	<context:component-scan
+		base-package="org.aryalinux.restapp.dao, org.aryalinux.restapp.service"></context:component-scan>
 	<context:annotation-config></context:annotation-config>
-	<tx:annotation-driven/>
+	<tx:annotation-driven />
 	<mvc:annotation-driven></mvc:annotation-driven>
 	<mvc:resources location="/WEB-INF/resources/" mapping="/resources/**"></mvc:resources>
 	<bean id="transactionManager"
