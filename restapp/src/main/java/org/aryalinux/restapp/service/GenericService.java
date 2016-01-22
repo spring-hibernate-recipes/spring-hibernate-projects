@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import org.aryalinux.restapp.common.request.RestRequest;
+import org.aryalinux.common.EntityList;
 import org.aryalinux.restapp.common.response.BaseResponse;
 import org.aryalinux.restapp.dao.GenericDAO;
 
@@ -20,11 +20,11 @@ public class GenericService {
 		this.dao = dao;
 	}
 
-	public BaseResponse newEntity(RestRequest request) {
+	public BaseResponse newEntity(Object ref) {
 		BaseResponse response = null;
 		try {
 			response = new BaseResponse(1, "Success.");
-			response.setData(getDao().create(request.getData()));
+			response.setData(getDao().create(ref));
 		} catch (Exception ex) {
 			response = new BaseResponse(0, ex.getMessage());
 		}
@@ -97,11 +97,22 @@ public class GenericService {
 		return response;
 	}
 
-	public BaseResponse update(RestRequest ref) {
+	public BaseResponse update(Object ref) {
 		BaseResponse response = null;
 		try {
-			getDao().update(ref.getData());
+			getDao().update(ref);
 			response = new BaseResponse(1, "Success.");
+		} catch (Exception ex) {
+			response = new BaseResponse(0, ex.getMessage());
+		}
+		return response;
+	}
+
+	public BaseResponse execute(EntityList ref) {
+		BaseResponse response = null;
+		try {
+			response = new BaseResponse(1, "Success.");
+			response.setData(getDao().execute(ref));
 		} catch (Exception ex) {
 			response = new BaseResponse(0, ex.getMessage());
 		}
