@@ -33,13 +33,13 @@ public class GenericDAO {
 	}
 
 	@Transactional
-	public Object create(Object ref) {
+	public Serializable create(Object ref) {
 		return (Serializable) sessionFactory.getCurrentSession().save(ref);
 	}
 
 	@Transactional
 	public Object getById(Serializable id) {
-		return (Serializable) sessionFactory.getCurrentSession().get(entityClass, id);
+		return sessionFactory.getCurrentSession().get(entityClass, id);
 	}
 
 	@Transactional

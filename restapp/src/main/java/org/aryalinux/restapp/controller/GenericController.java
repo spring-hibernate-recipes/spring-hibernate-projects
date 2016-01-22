@@ -60,31 +60,16 @@ public class GenericController {
 	@ResponseBody
 	@RequestMapping(path = "/{name}", method = RequestMethod.POST)
 	public BaseResponse create(@PathVariable String name, @RequestBody Map<String, Object> entityMap) {
-		// This method would be passed a Map.
-		// The map would be deep copied to another object.
-		// POST and PUT methods would need these objects.
-		// There are the following types of objects that can be
-		// Generated using this Map - Entity class's object for save/update
-		// EntityList object for execute.
-		// Entity object can be deciphered from the name param..
-		// But then the object can also be an EntityList. So we need to
-		// have a flag to differentiate. If multi flag is true then its
-		// multiple objects. Even if we figure out that its entity list
-		// We need extract individual entities out of it. For this we
-		// need to flag each entity with an id. This id exists only in the
-		// request object and not in entity or database. A list needs
-		// to be maintained of the object and respective id. this id can
-		// be something like _objectid. for maintaining this we may use
-		// a map or another discoverer. which can be declared in the beansxml
+		String objectId = entityMap.get("__object_id").toString();
+		entityMap.remove("__object_id");
 		return serviceDiscoverer.getServiceByName(name)
-				.newEntity(entityConverter.convert(entityMap, entityMap.get("__object_id").toString()));
+				.newEntity(entityConverter.convert(entityMap, objectId));
 	}
 
 	@ResponseBody
 	@RequestMapping(path = "/{name}/execute", method = RequestMethod.POST)
 	public BaseResponse execute(@PathVariable String name, @RequestBody Map<String, Object> entityMap) {
-		return serviceDiscoverer.getServiceByName(name)
-				.execute(entityConverter.convert(entityMap));
+		return serviceDiscoverer.getServiceByName(name).execute(entityConverter.convert(entityMap));
 	}
 
 	@ResponseBody

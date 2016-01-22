@@ -76,6 +76,7 @@ public class GenericService {
 				response.setData(data);
 			}
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			response = new BaseResponse(0, ex.getMessage());
 		}
 		return response;
