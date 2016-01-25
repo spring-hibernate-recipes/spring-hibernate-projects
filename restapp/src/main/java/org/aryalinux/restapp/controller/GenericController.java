@@ -1,9 +1,11 @@
 package org.aryalinux.restapp.controller;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 import org.aryalinux.restapp.common.response.BaseResponse;
+import org.aryalinux.restapp.model.Reflector;
 import org.aryalinux.restapp.service.EntityMapper;
 import org.aryalinux.restapp.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,12 @@ public class GenericController {
 
 	public void setEntityConverter(EntityMapper entityMapper) {
 		this.entityMapper = entityMapper;
+	}
+
+	@ResponseBody
+	@RequestMapping(path = "/{name}/structure", method = RequestMethod.GET)
+	public List<Reflector.EntityField> structure(@PathVariable String name) {
+		return Reflector.getStructure(entityMapper.getClassForName(name));
 	}
 
 	@ResponseBody
