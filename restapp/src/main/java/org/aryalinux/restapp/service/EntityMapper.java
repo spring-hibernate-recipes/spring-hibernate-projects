@@ -46,8 +46,6 @@ public class EntityMapper {
 				map.remove("__object_id");
 				Object entity = mapper.convertValue(map, entities.get(typeName));
 				newEntities.add(entity);
-				System.out.println(entities.get(typeName));
-				System.out.println(entity.getClass());
 			}
 			pojo.setEntities(newEntities);
 			return pojo;

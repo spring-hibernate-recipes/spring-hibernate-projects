@@ -76,8 +76,6 @@ public class GenericDAO {
 		for (int i = 0; i < entityList.getEntities().size(); i++) {
 			Object entity = entityList.getEntities().get(i);
 			int operation = entityList.getOperations().get(i);
-			System.out.println(entity.getClass());
-			System.out.println(operation);
 			if (entityList.getPrimaryEntityIndex() == i) {
 				id = sessionFactory.getCurrentSession().save(entity);
 			} else {
