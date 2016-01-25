@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import org.aryalinux.common.EntityList;
+import org.aryalinux.restapp.common.EntityList;
 import org.aryalinux.restapp.common.response.BaseResponse;
 import org.aryalinux.restapp.dao.GenericDAO;
 import org.springframework.beans.factory.annotation.Autowired;

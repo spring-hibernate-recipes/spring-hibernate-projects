@@ -12,7 +12,7 @@
 	http://www.springframework.org/schema/mvc
 	http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 	<context:component-scan
-		base-package="org.aryalinux.restapp.dao, org.aryalinux.restapp.service"></context:component-scan>
+		base-package="org.aryalinux.restapp.dao, org.aryalinux.restapp.service, org.aryalinux.restapp.controller"></context:component-scan>
 	<context:annotation-config></context:annotation-config>
 	<tx:annotation-driven />
 	<mvc:annotation-driven></mvc:annotation-driven>

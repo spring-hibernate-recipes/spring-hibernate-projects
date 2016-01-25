@@ -1,9 +1,11 @@
 package org.aryalinux.restapp.service;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
-import org.aryalinux.common.EntityList;
+import org.aryalinux.restapp.common.EntityList;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -37,6 +39,17 @@ public class EntityMapper {
 		try {
 			final ObjectMapper mapper = new ObjectMapper();
 			EntityList pojo = (EntityList) mapper.convertValue(data, EntityList.class);
+			List<Object> newEntities = new ArrayList<Object>();
+			for (Object obj : pojo.getEntities()) {
+				Map<String, Object> map = (Map<String, Object>) obj;
+				String typeName = map.get("__object_id").toString();
+				map.remove("__object_id");
+				Object entity = mapper.convertValue(map, entities.get(typeName));
+				newEntities.add(entity);
+				System.out.println(entities.get(typeName));
+				System.out.println(entity.getClass());
+			}
+			pojo.setEntities(newEntities);
 			return pojo;
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);

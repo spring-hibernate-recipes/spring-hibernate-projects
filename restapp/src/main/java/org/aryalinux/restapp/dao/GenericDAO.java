@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.aryalinux.common.EntityList;
+import org.aryalinux.restapp.common.EntityList;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -65,12 +65,19 @@ public class GenericDAO {
 		sessionFactory.getCurrentSession().delete(ref);
 	}
 
+	/*
+	 * TODO: repair. Hibernate needs to know the class name
+	 * of the entity so that it can perform appropriate action
+	 * on the corresponding table
+	 */
 	@Transactional
 	public Serializable execute(EntityList entityList) {
 		Serializable id = null;
 		for (int i = 0; i < entityList.getEntities().size(); i++) {
 			Object entity = entityList.getEntities().get(i);
 			int operation = entityList.getOperations().get(i);
+			System.out.println(entity.getClass());
+			System.out.println(operation);
 			if (entityList.getPrimaryEntityIndex() == i) {
 				id = sessionFactory.getCurrentSession().save(entity);
 			} else {
