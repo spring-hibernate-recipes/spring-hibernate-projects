@@ -42,6 +42,13 @@ public class GenericController {
 	@ResponseBody
 	@RequestMapping(path = "/{name}", method = RequestMethod.GET)
 	public BaseResponse getById(@PathVariable String name, @RequestParam("id") Serializable id) {
+		Class pkClass = entityMapper.getPrimaryKeyTypeForName(name);
+		if (pkClass == Integer.class) {
+			id = new Integer(id.toString());
+		}
+		else if (pkClass == String.class) {
+			id = new String(id.toString());
+		}
 		return service.findById(entityMapper.getClassForName(name), id);
 	}
 

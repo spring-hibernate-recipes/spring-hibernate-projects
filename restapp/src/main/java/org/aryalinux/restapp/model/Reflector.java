@@ -74,6 +74,8 @@ public final class Reflector {
 								|| paramType.equals(Double.class) || paramType.equals(Date.class)) {
 							result.add(
 									new EntityField(method.getName().replace("set", ""), "field", paramType.getName()));
+						} else if (paramType.isArray() && paramType.getComponentType().toString().equals("byte")) {
+							result.add(new EntityField(method.getName().replace("set", ""), "file", "byte"));
 						} else {
 							result.add(new EntityField(method.getName().replace("set", ""), "reference",
 									paramType.getName()));

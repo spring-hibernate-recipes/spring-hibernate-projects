@@ -17,10 +17,10 @@
 <body>
 	<h1>ClassicModels - Admin Console</h1>
 	<ul class="nav nav-pills">
-		<li role="presentation" class="active"><a href="#">Home</a></li>
+		<li role="presentation"><a href="index.jsp">Home</a></li>
 		<li role="presentation"><a href="employee.html">Employees</a></li>
 		<li role="presentation"><a href="productLine.html">Product Lines</a></li>
-		<li role="presentation"><a href="customer.html">Customers</a></li>
+		<li role="presentation" class="active"><a href="customer.html">Customers</a></li>
 	</ul>
 </body>
 </html>
