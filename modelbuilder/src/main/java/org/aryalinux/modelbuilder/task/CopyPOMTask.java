@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 
 import org.aryalinux.modelbuilder.model.ProjectProperties;
 import org.aryalinux.modelbuilder.model.Task;
+import org.aryalinux.modelbuilder.ui.MainFrame;
 
 public class CopyPOMTask extends Task {
 
@@ -16,7 +17,8 @@ public class CopyPOMTask extends Task {
 	public void doTask() {
 		try {
 			ProjectProperties props = (ProjectProperties) getData();
-			FileInputStream fileInputStream = new FileInputStream("D:\\workspace\\classicmodels\\pom.xml");
+			FileInputStream fileInputStream = new FileInputStream(
+					MainFrame.settings.get("sample.project.location") + File.separator + "pom.xml");
 			byte[] data = new byte[fileInputStream.available()];
 			fileInputStream.read(data);
 			String contents = new String(data);

@@ -30,10 +30,7 @@
 	<bean id="entityList" class="org.aryalinux.restapp.service.EntityMapper">
 		<property name="entities">
 			<map>
-				<entry key="productline" value="org.aryalinux.classicmodels.model.ProductLine"></entry>
-				<entry key="employee" value="org.aryalinux.classicmodels.model.Employee"></entry>
-				<entry key="customer" value="org.aryalinux.classicmodels.model.Customer"></entry>
-				<entry key="office" value="org.aryalinux.classicmodels.model.Office"></entry>
+				<!-- entities -->
 			</map>
 		</property>
 	</bean>

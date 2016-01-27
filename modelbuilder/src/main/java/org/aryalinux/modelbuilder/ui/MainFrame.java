@@ -2,6 +2,7 @@ package org.aryalinux.modelbuilder.ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 import org.aryalinux.modelbuilder.model.Task;
 import org.aryalinux.modelbuilder.task.CopyPOMTask;
@@ -18,6 +19,7 @@ public class MainFrame extends WizardFrame implements ActionListener {
 	private ProjectPropertiesPanel projectPropertiesPanel;
 	private ExecutionPanel executionPanel;
 	public static MainFrame mainFrame;
+	public static Map<String, String> settings;
 
 	public MainFrame() {
 		super("Model Builder");
@@ -106,8 +108,9 @@ public class MainFrame extends WizardFrame implements ActionListener {
 						task1.setData(projectPropertiesPanel.getProjectProperties());
 						executionPanel.getTasks().add(task1);
 
-						Task task2 = new ProjectPreparationTask();
+						ProjectPreparationTask task2 = new ProjectPreparationTask();
 						task2.setData(projectPropertiesPanel.getProjectProperties());
+						task2.setDatabaseProperties(dbPropertiesPanel.getDatabaseProperties());
 						executionPanel.getTasks().add(task2);
 
 						ModelClassGenerationTask task3 = new ModelClassGenerationTask();

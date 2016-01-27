@@ -10,6 +10,7 @@ import org.aryalinux.modelbuilder.model.ProjectProperties;
 import org.aryalinux.modelbuilder.model.TableProperties;
 import org.aryalinux.modelbuilder.model.Task;
 
+@SuppressWarnings("unchecked")
 public class ModelClassGenerationTask extends Task {
 	private ProjectProperties projectProperties;
 
@@ -24,10 +25,9 @@ public class ModelClassGenerationTask extends Task {
 	@Override
 	public void doTask() {
 		List<TableProperties> props = (List<TableProperties>) getData();
-		String packageName = projectProperties.getGroupId() + "." + projectProperties.getArtifactId() + ".model";
-		String dirName = projectProperties.getLocation() + File.separator + projectProperties.getArtifactId()
-				+ File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator
-				+ packageName.replace(".", File.separator);
+		String packageName = projectProperties.getGroupId() + ".model";
+		String dirName = FileUtil.path(projectProperties.getLocation(), projectProperties.getArtifactId(), "src",
+				"main", "java", packageName.replace(".", File.separator));
 		for (TableProperties tp : props) {
 			Set<String> imports = new HashSet<String>();
 			imports.add("javax.persistence.Table");
@@ -42,8 +42,26 @@ public class ModelClassGenerationTask extends Task {
 				if (columnProperties.isPrimary()) {
 					sb.append("\t@Id\n");
 					imports.add("javax.persistence.Id");
+					sb.append("\t@Column(");
+					sb.append("columnDefinition=\"");
+					sb.append(columnProperties.getDataType());
+					if (columnProperties.getLength() != 16777215 && columnProperties.getLength() != 65535
+							&& !(columnProperties.getDataType().contains("DATE")
+									|| columnProperties.getDataType().contains("DOUBLE"))) {
+						sb.append("(" + columnProperties.getLength() + ")");
+					}
+					sb.append("\")\n");
+					imports.add("javax.persistence.Column");
 				} else if (!columnProperties.isJoinColumn()) {
-					sb.append("\t@Column\n");
+					sb.append("\t@Column(");
+					sb.append("columnDefinition=\"");
+					sb.append(columnProperties.getDataType());
+					if (columnProperties.getLength() != 16777215 && columnProperties.getLength() != 65535
+							&& !(columnProperties.getDataType().contains("DATE")
+									|| columnProperties.getDataType().contains("DOUBLE"))) {
+						sb.append("(" + columnProperties.getLength() + ")");
+					}
+					sb.append("\")\n");
 					imports.add("javax.persistence.Column");
 				} else if (columnProperties.isJoinColumn()) {
 					if (columnProperties.getJoinType() == 11) {
@@ -83,6 +101,11 @@ public class ModelClassGenerationTask extends Task {
 			}
 			str = str.replace("// imports", imps);
 			FileUtil.writeFile(dirName + File.separator + tp.getName() + ".java", str);
+			FileUtil.replaceInFile(
+					FileUtil.path(projectProperties.getLocation(), projectProperties.getArtifactId(), "src", "main",
+							"webapp", "WEB-INF") + "dispatcher-servlet.xml",
+					"				<!-- entities -->", "				<!-- entities -->\n				<entry key=\""
+							+ tp.getName() + "\" value=\"" + packageName + "." + tp.getName() + "\"></entry>");
 		}
 	}
 

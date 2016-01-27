@@ -55,4 +55,25 @@ public class FileUtil {
 			e.printStackTrace();
 		}
 	}
+
+	public static final void copyRecursive(String src, String dest) {
+		if (new File(src).isDirectory()) {
+			new File(dest + File.separator + new File(src).getName()).mkdirs();
+			File[] files = new File(src).listFiles();
+			for (File f : files) {
+				copyRecursive(f.getAbsolutePath(), new File(dest + File.separator + new File(src).getName()).getAbsolutePath());
+			}
+		}
+		else {
+			copyFile(src, dest + File.separator + new File(src).getName());
+		}
+	}
+	
+	public static final String path(String...parts ) {
+		StringBuilder builder = new StringBuilder();
+		for (String str: parts) {
+			builder.append(str + File.separator);
+		}
+		return builder.toString();
+	}
 }

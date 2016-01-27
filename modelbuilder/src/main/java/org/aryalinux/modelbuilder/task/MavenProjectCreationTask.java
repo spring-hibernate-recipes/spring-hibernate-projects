@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.aryalinux.modelbuilder.model.ProjectProperties;
 import org.aryalinux.modelbuilder.model.Task;
+import org.aryalinux.modelbuilder.ui.MainFrame;
 
 public class MavenProjectCreationTask extends Task {
 	public MavenProjectCreationTask() {
@@ -12,8 +13,8 @@ public class MavenProjectCreationTask extends Task {
 
 	public void doTask() {
 		ProjectProperties projectProperties = (ProjectProperties) getData();
-		String mavenPath = "D:\\apache-maven-3.3.9\\bin\\";
-		String command = mavenPath + "mvn.cmd -B archetype:generate -DgroupId=GROUPID -DartifactId=ARTIFACTID -DarchetypeArtifactId=maven-archetype-webapp";
+		String mavenPath = MainFrame.settings.get("maven.executable");
+		String command = mavenPath + " -B archetype:generate -DgroupId=GROUPID -DartifactId=ARTIFACTID -DarchetypeArtifactId=maven-archetype-webapp";
 		command = command.replace("GROUPID", projectProperties.getGroupId());
 		command = command.replace("ARTIFACTID", projectProperties.getArtifactId());
 		try {
