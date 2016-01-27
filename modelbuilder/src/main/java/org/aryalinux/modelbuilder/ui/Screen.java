@@ -9,11 +9,13 @@ import javax.swing.JPanel;
 public class Screen {
 	private JPanel panel;
 	private String name;
+	private String title;
 	private List<Boolean> buttonStates;
 
-	public Screen(JPanel panel, String name, Boolean... states) {
+	public Screen(JPanel panel, String name, String title, Boolean... states) {
 		this.panel = panel;
 		this.name = name;
+		this.title = title;
 		this.buttonStates = new ArrayList<Boolean>();
 		Collections.addAll(buttonStates, states);
 	}
@@ -40,6 +42,14 @@ public class Screen {
 
 	public void setButtonStates(List<Boolean> buttonStates) {
 		this.buttonStates = buttonStates;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 }

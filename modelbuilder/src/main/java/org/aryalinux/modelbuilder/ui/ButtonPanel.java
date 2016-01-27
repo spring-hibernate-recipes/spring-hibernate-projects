@@ -32,4 +32,15 @@ public class ButtonPanel extends JPanel {
 			buttons.get(i).setEnabled(states.get(i));
 		}
 	}
+	
+	public void removeButton(String label) {
+		JButton buttonToBeRemoved = null;
+		for (int i = 0; i < buttons.size(); i++) {
+			if (buttons.get(i).getText().equals(label)) {
+				buttonToBeRemoved = buttons.get(i);
+			}
+		}
+		thePanel.remove(buttonToBeRemoved);
+		buttons.remove(buttonToBeRemoved);
+	}
 }
