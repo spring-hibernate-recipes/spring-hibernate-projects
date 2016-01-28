@@ -1,4 +1,4 @@
-package org.aryalinux.modelbuilder.ui;
+package org.aryalinux;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,6 +8,8 @@ import java.io.ObjectOutputStream;
 import java.util.Map;
 
 import org.aryalinux.modelbuilder.task.FileUtil;
+import org.aryalinux.modelbuilder.ui.MainFrame;
+import org.aryalinux.modelbuilder.ui.SettingsDialog;
 
 public class MainClass {
 	@SuppressWarnings("unchecked")

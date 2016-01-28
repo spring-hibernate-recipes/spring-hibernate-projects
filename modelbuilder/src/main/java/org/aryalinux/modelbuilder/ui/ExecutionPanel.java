@@ -45,11 +45,6 @@ public class ExecutionPanel extends GenericPanel {
 					public void run() {
 						progressBar.setString(task.getName());
 						task.doTask();
-						try {
-							Thread.sleep(1000);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
 						int n = calculate(tasks.indexOf(task));
 						progressBar.setValue(n);
 					}

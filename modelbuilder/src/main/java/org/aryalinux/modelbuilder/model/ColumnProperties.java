@@ -45,6 +45,10 @@ public class ColumnProperties {
 			javaType = "byte[]";
 		} else if (javaType.equals("91")) {
 			javaType = "Date";
+		} else if (javaType.equals("93")) {
+			javaType = "Date";
+		}else if (javaType.equals("-7")) {
+			javaType = "Boolean";
 		}
 		this.javaType = javaType;
 	}
