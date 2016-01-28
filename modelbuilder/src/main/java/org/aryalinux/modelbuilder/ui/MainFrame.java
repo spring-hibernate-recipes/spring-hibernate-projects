@@ -127,6 +127,9 @@ public class MainFrame extends WizardFrame implements ActionListener {
 				throw new RuntimeException(ex);
 			}
 		}
+		if (e.getActionCommand().equals("Cancel")) {
+			System.exit(0);
+		}
 	}
 
 	public void doFinish() {
@@ -140,5 +143,7 @@ public class MainFrame extends WizardFrame implements ActionListener {
 				System.exit(0);
 			}
 		});
+		validate();
+		repaint();
 	}
 }

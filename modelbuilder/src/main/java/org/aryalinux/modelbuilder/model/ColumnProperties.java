@@ -23,32 +23,29 @@ public class ColumnProperties {
 
 	public void setDataType(String dataType) {
 		this.dataType = dataType;
-		if (dataType.contains("BLOB") || dataType.contains("MEDIUMTEXT")) {
-			this.javaType = "-1";
+		if (dataType.contains("TEXT") || dataType.contains("BLOB")) {
+			javaType = "byte[]";
 		}
 	}
 
 	public String getJavaType() {
-		if (javaType.equals("12")) {
-			return "String";
-		} else if (javaType.equals("8")) {
-			return "Double";
-		} else if (javaType.equals("4")) {
-			return "Integer";
-		} else if (javaType.equals("5")) {
-			return "Short";
-		} else if (javaType.equals("-1") && dataType.equals("MEDIUMTEXT")) {
-			return "byte[]";
-		} else if (javaType.equals("-1") && dataType.contains("BLOB")) {
-			return "byte[]";
-		} else if (javaType.equals("91")) {
-			return "Date";
-		} else {
-			return "String";
-		}
+		return javaType;
 	}
 
 	public void setJavaType(String javaType) {
+		if (javaType.equals("12")) {
+			javaType = "String";
+		} else if (javaType.equals("8")) {
+			javaType = "Double";
+		} else if (javaType.equals("4")) {
+			javaType = "Integer";
+		} else if (javaType.equals("5")) {
+			javaType = "Short";
+		} else if (javaType.equals("-1") || dataType.contains("TEXT") || dataType.contains("BLOB")) {
+			javaType = "byte[]";
+		} else if (javaType.equals("91")) {
+			javaType = "Date";
+		}
 		this.javaType = javaType;
 	}
 

@@ -37,7 +37,7 @@ public class ModelClassGenerationTask extends Task {
 			sb.append("// imports\n");
 			sb.append("@Entity\n");
 			sb.append("@Table(name=\"" + tp.getName() + "\")\n");
-			sb.append("public class " + tp.getName() + " {\n");
+			sb.append("public class " + tp.getEntityClassName() + " {\n");
 			for (ColumnProperties columnProperties : tp.getColumnProperties()) {
 				if (columnProperties.isPrimary()) {
 					sb.append("\t@Id\n");
@@ -70,9 +70,9 @@ public class ModelClassGenerationTask extends Task {
 					} else if (columnProperties.getJoinType() == 19) {
 						sb.append("\t@OneToMany\n");
 						imports.add("javax.persistence.OneToMany");
-					} else if (columnProperties.getJoinType() == 99) {
-						sb.append("\t@ManyToMany\n");
-						imports.add("javax.persistence.ManyToMany");
+					} else if (columnProperties.getJoinType() == 91) {
+						sb.append("\t@ManyToOne\n");
+						imports.add("javax.persistence.ManyToOne");
 					}
 					sb.append("\t@JoinColumn(name=\"" + columnProperties.getName() + "\")\n");
 					imports.add("javax.persistence.JoinColumn");
@@ -100,12 +100,13 @@ public class ModelClassGenerationTask extends Task {
 				imps += "import " + imp + ";\n";
 			}
 			str = str.replace("// imports", imps);
-			FileUtil.writeFile(dirName + File.separator + tp.getName() + ".java", str);
+			FileUtil.writeFile(dirName + File.separator + tp.getEntityClassName() + ".java", str);
 			FileUtil.replaceInFile(
 					FileUtil.path(projectProperties.getLocation(), projectProperties.getArtifactId(), "src", "main",
 							"webapp", "WEB-INF") + "dispatcher-servlet.xml",
-					"				<!-- entities -->", "				<!-- entities -->\n				<entry key=\""
-							+ tp.getName() + "\" value=\"" + packageName + "." + tp.getName() + "\"></entry>");
+					"				<!-- entities -->",
+					"				<!-- entities -->\n				<entry key=\"" + tp.getRestResource()
+							+ "\" value=\"" + packageName + "." + tp.getEntityClassName() + "\"></entry>");
 		}
 	}
 
