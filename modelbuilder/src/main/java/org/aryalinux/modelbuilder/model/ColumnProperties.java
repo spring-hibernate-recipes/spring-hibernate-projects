@@ -1,20 +1,31 @@
 package org.aryalinux.modelbuilder.model;
 
 public class ColumnProperties {
-	private String name;
+	private String tableColumnName;
+	private String propertyName;
 	private String dataType;
 	private String javaType;
 	private int length;
 	private boolean primary;
 	private boolean joinColumn;
 	private int joinType;
+	private String fetchType;
+	private String cascadeType;
 
-	public String getName() {
-		return name;
+	public String getTableColumnName() {
+		return tableColumnName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTableColumnName(String tableColumnName) {
+		this.tableColumnName = tableColumnName;
+	}
+
+	public String getPropertyName() {
+		return propertyName;
+	}
+
+	public void setPropertyName(String propertyName) {
+		this.propertyName = propertyName;
 	}
 
 	public String getDataType() {
@@ -47,7 +58,7 @@ public class ColumnProperties {
 			javaType = "Date";
 		} else if (javaType.equals("93")) {
 			javaType = "Date";
-		}else if (javaType.equals("-7")) {
+		} else if (javaType.equals("-7")) {
 			javaType = "Boolean";
 		}
 		this.javaType = javaType;
@@ -83,6 +94,22 @@ public class ColumnProperties {
 
 	public void setJoinType(int joinType) {
 		this.joinType = joinType;
+	}
+
+	public String getFetchType() {
+		return fetchType;
+	}
+
+	public void setFetchType(String fetchType) {
+		this.fetchType = fetchType;
+	}
+
+	public String getCascadeType() {
+		return cascadeType;
+	}
+
+	public void setCascadeType(String cascadeType) {
+		this.cascadeType = cascadeType;
 	}
 
 }

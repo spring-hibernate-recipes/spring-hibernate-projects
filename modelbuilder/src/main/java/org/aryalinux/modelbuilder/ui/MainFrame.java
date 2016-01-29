@@ -23,7 +23,8 @@ public class MainFrame extends WizardFrame implements ActionListener {
 
 	public MainFrame() {
 		super("Model Builder");
-		center(1000, 500);
+		setExtendedState(MAXIMIZED_BOTH);
+		setVisible(true);
 		addButtons();
 		addScreens();
 		validate();

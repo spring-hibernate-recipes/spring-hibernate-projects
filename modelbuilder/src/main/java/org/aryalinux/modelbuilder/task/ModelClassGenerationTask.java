@@ -50,7 +50,9 @@ public class ModelClassGenerationTask extends Task {
 									|| columnProperties.getDataType().contains("DOUBLE"))) {
 						sb.append("(" + columnProperties.getLength() + ")");
 					}
-					sb.append("\")\n");
+					sb.append("\"");
+					sb.append(", name=\"" + columnProperties.getTableColumnName() + "\"");
+					sb.append(")\n");
 					imports.add("javax.persistence.Column");
 				} else if (!columnProperties.isJoinColumn()) {
 					sb.append("\t@Column(");
@@ -61,36 +63,59 @@ public class ModelClassGenerationTask extends Task {
 									|| columnProperties.getDataType().contains("DOUBLE"))) {
 						sb.append("(" + columnProperties.getLength() + ")");
 					}
-					sb.append("\")\n");
+					sb.append("\"");
+					sb.append(", name=\"" + columnProperties.getTableColumnName() + "\"");
+					sb.append(")\n");
 					imports.add("javax.persistence.Column");
 				} else if (columnProperties.isJoinColumn()) {
-					if (columnProperties.getJoinType() == 11) {
-						sb.append("\t@OneToOne\n");
+					int joinType = columnProperties.getJoinType();
+					if (joinType == 11) {
+						sb.append("\t@OneToOne");
 						imports.add("javax.persistence.OneToOne");
-					} else if (columnProperties.getJoinType() == 19) {
-						sb.append("\t@OneToMany\n");
+					} else if (joinType == 19) {
+						sb.append("\t@OneToMany");
 						imports.add("javax.persistence.OneToMany");
-					} else if (columnProperties.getJoinType() == 91) {
-						sb.append("\t@ManyToOne\n");
+					} else if (joinType == 91) {
+						sb.append("\t@ManyToOne");
 						imports.add("javax.persistence.ManyToOne");
 					}
-					sb.append("\t@JoinColumn(name=\"" + columnProperties.getName() + "\")\n");
+					if (joinType == 11 || joinType == 91 || joinType == 19) {
+						if (columnProperties.getCascadeType() != null || columnProperties.getFetchType() != null) {
+							sb.append("(");
+							if (columnProperties.getCascadeType() != null) {
+								sb.append("cascade=CascadeType." + columnProperties.getCascadeType());
+								imports.add("javax.persistence.CascadeType");
+							}
+							if (columnProperties.getFetchType() != null) {
+								if (columnProperties.getCascadeType() != null) {
+									sb.append(", ");
+								}
+								sb.append("fetch=FetchType." + columnProperties.getFetchType());
+								imports.add("javax.persistence.FetchType");
+							}
+							sb.append(")");
+						}
+					}
+					sb.append("\n");
+					sb.append("\t@JoinColumn(name=\"" + columnProperties.getTableColumnName() + "\")\n");
 					imports.add("javax.persistence.JoinColumn");
 				}
 				if (columnProperties.getJavaType().equals("Date")) {
 					imports.add("java.util.Date");
 				}
-				sb.append("\tprivate " + columnProperties.getJavaType() + " " + columnProperties.getName() + ";\n");
+				sb.append("\tprivate " + columnProperties.getJavaType() + " " + columnProperties.getPropertyName()
+						+ ";\n");
 			}
 			sb.append("\n");
 			for (ColumnProperties columnProperties : tp.getColumnProperties()) {
-				sb.append("\tpublic void " + toMethod(columnProperties.getName(), "set") + "("
-						+ columnProperties.getJavaType() + " " + columnProperties.getName() + ") {\n");
-				sb.append("\t\tthis." + columnProperties.getName() + " = " + columnProperties.getName() + ";\n");
+				sb.append("\tpublic void " + toMethod(columnProperties.getPropertyName(), "set") + "("
+						+ columnProperties.getJavaType() + " " + columnProperties.getPropertyName() + ") {\n");
+				sb.append("\t\tthis." + columnProperties.getPropertyName() + " = " + columnProperties.getPropertyName()
+						+ ";\n");
 				sb.append("\t}\n\n");
 				sb.append("\tpublic " + columnProperties.getJavaType() + " "
-						+ toMethod(columnProperties.getName(), "get") + "() {\n");
-				sb.append("\t\treturn " + columnProperties.getName() + ";\n");
+						+ toMethod(columnProperties.getPropertyName(), "get") + "() {\n");
+				sb.append("\t\treturn " + columnProperties.getPropertyName() + ";\n");
 				sb.append("\t}\n\n");
 			}
 			sb.append("}\n");

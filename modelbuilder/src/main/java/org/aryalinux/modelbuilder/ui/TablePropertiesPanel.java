@@ -96,11 +96,12 @@ public class TablePropertiesPanel extends GenericPanel implements ItemListener, 
 				ResultSet resultSet = databaseMetaData.getColumns(null, null, table, null);
 				while (resultSet.next()) {
 					ColumnProperties columnProperties = new ColumnProperties();
-					columnProperties.setName(resultSet.getString("COLUMN_NAME"));
+					columnProperties.setTableColumnName(resultSet.getString("COLUMN_NAME"));
+					columnProperties.setPropertyName(resultSet.getString("COLUMN_NAME"));
 					columnProperties.setDataType(resultSet.getString("TYPE_NAME"));
 					columnProperties.setJavaType(resultSet.getString("DATA_TYPE"));
 					columnProperties.setJoinColumn(false);
-					if (columnProperties.getName().equals(primaryKeyColumnName)) {
+					if (columnProperties.getTableColumnName().equals(primaryKeyColumnName)) {
 						columnProperties.setPrimary(true);
 					}
 					columnProperties.setLength(resultSet.getInt("COLUMN_SIZE"));
@@ -130,13 +131,16 @@ public class TablePropertiesPanel extends GenericPanel implements ItemListener, 
 		for (String table : tables) {
 			tableNames.addItem(table);
 		}
-		defaultTableModel.addColumn("Name");
+		defaultTableModel.addColumn("Column Name");
+		defaultTableModel.addColumn("Property Name");
 		defaultTableModel.addColumn("Data Type");
 		defaultTableModel.addColumn("Java Type");
 		defaultTableModel.addColumn("Length");
 		defaultTableModel.addColumn("Primary Key?");
 		defaultTableModel.addColumn("Join Column?");
 		defaultTableModel.addColumn("Join Type");
+		defaultTableModel.addColumn("Cascade Type");
+		defaultTableModel.addColumn("Fetch Type");
 
 		populateCurrentTableDetails();
 	}
@@ -154,10 +158,12 @@ public class TablePropertiesPanel extends GenericPanel implements ItemListener, 
 						restResourceName.setText(properties.getRestResource());
 						modelClassName.setText(properties.getEntityClassName());
 						for (ColumnProperties columnProperties : properties.getColumnProperties()) {
-							Object[] row = new Object[] { columnProperties.getName(), columnProperties.getDataType(),
+							Object[] row = new Object[] { columnProperties.getTableColumnName(),
+									columnProperties.getPropertyName(), columnProperties.getDataType(),
 									columnProperties.getJavaType(), columnProperties.getLength(),
 									columnProperties.isPrimary(), columnProperties.isJoinColumn(),
-									columnProperties.getJoinType() };
+									columnProperties.getJoinType(), columnProperties.getCascadeType(),
+									columnProperties.getFetchType() };
 							defaultTableModel.addRow(row);
 						}
 					}
@@ -190,15 +196,21 @@ public class TablePropertiesPanel extends GenericPanel implements ItemListener, 
 						ColumnProperties columnPropertiesObj = new ColumnProperties();
 						columnProperties.add(columnPropertiesObj);
 
-						columnPropertiesObj.setName(row.get(0).toString());
-						columnPropertiesObj.setDataType(row.get(1).toString());
-						String javaType = row.get(2).toString();
-						System.out.println(javaType);
+						columnPropertiesObj.setTableColumnName(row.get(0).toString());
+						columnPropertiesObj.setPropertyName(row.get(1).toString());
+						columnPropertiesObj.setDataType(row.get(2).toString());
+						String javaType = row.get(3).toString();
 						columnPropertiesObj.setJavaType(javaType);
-						columnPropertiesObj.setLength(Integer.parseInt(row.get(3).toString()));
-						columnPropertiesObj.setPrimary(Boolean.parseBoolean(row.get(4).toString()));
-						columnPropertiesObj.setJoinColumn(Boolean.parseBoolean(row.get(5).toString()));
-						columnPropertiesObj.setJoinType(Integer.parseInt(row.get(6).toString()));
+						columnPropertiesObj.setLength(Integer.parseInt(row.get(4).toString()));
+						columnPropertiesObj.setPrimary(Boolean.parseBoolean(row.get(5).toString()));
+						columnPropertiesObj.setJoinColumn(Boolean.parseBoolean(row.get(6).toString()));
+						columnPropertiesObj.setJoinType(Integer.parseInt(row.get(7).toString()));
+						if (row.get(8) != null) {
+							columnPropertiesObj.setCascadeType(row.get(8).toString());
+						}
+						if (row.get(9) != null) {
+							columnPropertiesObj.setFetchType(row.get(9).toString());
+						}
 					}
 					properties.setColumnProperties(columnProperties);
 				}
