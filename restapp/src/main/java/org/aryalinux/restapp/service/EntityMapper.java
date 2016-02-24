@@ -70,12 +70,25 @@ public class EntityMapper {
 		try {
 			Class pkClazz = null;
 			Class clazz = getClassForName(name);
+			Field[] superclassFields = clazz.getSuperclass().getDeclaredFields();
 			Field[] fields = clazz.getDeclaredFields();
 			for (Field field : fields) {
-				Annotation[] annotations = field.getDeclaredAnnotations();
+				field.setAccessible(true);
+				Annotation[] annotations = field.getAnnotations();
 				for (Annotation annotation: annotations) {
 					if (annotation.annotationType() == Id.class) {
 						pkClazz = field.getType();
+					}
+				}
+			}
+			if (pkClazz == null) {
+				for (Field field : superclassFields) {
+					field.setAccessible(true);
+					Annotation[] annotations = field.getAnnotations();
+					for (Annotation annotation: annotations) {
+						if (annotation.annotationType() == Id.class) {
+							pkClazz = field.getType();
+						}
 					}
 				}
 			}
