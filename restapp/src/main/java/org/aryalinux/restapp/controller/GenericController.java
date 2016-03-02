@@ -2,7 +2,7 @@ package org.aryalinux.restapp.controller;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
+import java.util.HashMap;
 
 import org.aryalinux.restapp.common.response.BaseResponse;
 import org.aryalinux.restapp.model.Reflector;
@@ -39,17 +39,19 @@ public class GenericController {
 		return Reflector.getStructure(entityMapper.getClassForName(name));
 	}
 
+	@SuppressWarnings("rawtypes")
 	@ResponseBody
 	@RequestMapping(path = "/{name}", method = RequestMethod.GET)
 	public BaseResponse getById(@PathVariable String name, @RequestParam("id") Serializable id) {
 		Class pkClass = entityMapper.getPrimaryKeyTypeForName(name);
 		if (pkClass == Integer.class) {
-			id = new Integer(id.toString());
+			return service.findById(entityMapper.getClassForName(name), new Integer(id.toString()));
+		} else if (pkClass == String.class) {
+			return service.findById(entityMapper.getClassForName(name), id.toString());
+		} else {
+			BaseResponse response = new BaseResponse(0, "Could not determine primary key type for class.");
+			return response;
 		}
-		else if (pkClass == String.class) {
-			id = new String(id.toString());
-		}
-		return service.findById(entityMapper.getClassForName(name), id);
 	}
 
 	@ResponseBody
@@ -60,31 +62,40 @@ public class GenericController {
 
 	@ResponseBody
 	@RequestMapping(path = "/{name}/search", method = RequestMethod.POST)
-	public BaseResponse getByParams(@PathVariable String name, @RequestBody Map<String, Object> params) {
+	public BaseResponse getByParams(@PathVariable String name, @RequestBody HashMap<String, Object> params) {
 		return service.fetchByParams(entityMapper.getClassForName(name), params);
 	}
 
 	@ResponseBody
 	@RequestMapping(path = "/{name}", method = RequestMethod.POST)
-	public BaseResponse create(@PathVariable String name, @RequestBody Map<String, Object> entityMap) {
+	public BaseResponse create(@PathVariable String name, @RequestBody HashMap<String, Object> entityMap) {
 		return service.newEntity(entityMapper.convert(entityMap, name));
 	}
 
 	@ResponseBody
 	@RequestMapping(path = "/{name}/execute", method = RequestMethod.POST)
-	public BaseResponse execute(@PathVariable String name, @RequestBody Map<String, Object> entityMap) {
+	public BaseResponse execute(@PathVariable String name, @RequestBody HashMap<String, Object> entityMap) {
 		return service.execute(entityMapper.convert(entityMap));
 	}
 
 	@ResponseBody
 	@RequestMapping(path = "/{name}", method = RequestMethod.PUT)
-	public BaseResponse update(@PathVariable String name, @RequestBody Map<String, Object> entityMap) {
+	public BaseResponse update(@PathVariable String name, @RequestBody HashMap<String, Object> entityMap) {
 		return service.update(entityMapper.convert(entityMap, name));
 	}
 
+	@SuppressWarnings("rawtypes")
 	@ResponseBody
 	@RequestMapping(path = "/{name}", method = RequestMethod.DELETE)
 	public BaseResponse delete(@PathVariable String name, @RequestParam("id") Serializable id) {
-		return service.delete(entityMapper.getClassForName(name), id);
+		Class pkClass = entityMapper.getPrimaryKeyTypeForName(name);
+		if (pkClass == Integer.class) {
+			return service.delete(entityMapper.getClassForName(name), new Integer(id.toString()));
+		} else if (pkClass == String.class) {
+			return service.delete(entityMapper.getClassForName(name), id.toString());
+		} else {
+			BaseResponse response = new BaseResponse(0, "Could not determine primary key type for class.");
+			return response;
+		}
 	}
 }
